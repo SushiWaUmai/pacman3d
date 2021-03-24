@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7964291695418415889}
   - component: {fileID: 2471204343843173104}
-  - component: {fileID: 2502579438730985320}
+  - component: {fileID: 1702896381391584230}
   m_Layer: 0
   m_Name: Power Pellet
   m_TagString: Untagged
@@ -46,7 +46,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2502579438730985320
+--- !u!114 &1702896381391584230
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -55,7 +55,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6140882787993858586}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 52bb296f7bf44214485cb19aa6a06111, type: 3}
+  m_Script: {fileID: 11500000, guid: b3b75dec66f80c44a922cd23a7965b61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   totalScore: {fileID: 11400000, guid: dec92e44a508ffe459b24222b4f6ea7a, type: 2}

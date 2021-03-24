@@ -13,6 +13,8 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
+        // TODO: Make a score manager 
+        totalScore.Value = 0;
         totalScore.AddListener(() => totalScoreDisplay.text = totalScore.Value.ToString());
     }
 }

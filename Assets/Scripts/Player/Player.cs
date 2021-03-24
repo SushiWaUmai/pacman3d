@@ -21,7 +21,8 @@ public class Player : MonoBehaviour
 
     private void StopPowerPallet()
     {
-        powerPelletTimer.Stop();
+        if(powerPelletTimer != null)
+            powerPelletTimer.Stop();
     }
 
     private void PowerPalletCollect()

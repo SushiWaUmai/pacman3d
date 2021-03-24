@@ -5,7 +5,7 @@ using ScriptableObjectArchitecture;
 
 public class Pellet : Collectable
 {
-    private List<Pellet> allFood = new List<Pellet>();
+    private static List<Pellet> allFood = new List<Pellet>();
     [SerializeField] private GameEvent OnGameClear;
 
     protected override void Init()

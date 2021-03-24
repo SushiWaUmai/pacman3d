@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b179cbd50905e62428d0c1c6f9f03f30, type: 3}
+  m_Name: DefaultMap
+  m_EditorClassIdentifier: 
+  mapTexture: {fileID: 2800000, guid: caeaf0cda3518bc408252848854e8980, type: 3}
+  tileSize: 2
+  mapMaterial: {fileID: 2100000, guid: a595bcbdc45d5b44f9e8030ff9c863e7, type: 2}
+  minimapLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  miniMapMaterial: {fileID: 2100000, guid: 1cebc6b75ce373e4f9f92c2f6362e898, type: 2}
+  pellet: {fileID: 4955072529263123171, guid: 850cc2e29acc34a459ca9d40dcaf8452, type: 3}
+  powerPellet: {fileID: 6140882787993858586, guid: f605ab0dc0dd7e44d8c8e84ebf45a827,
+    type: 3}
+  portal: {fileID: 5444025815372702927, guid: d58dccd029e177b4ba83ebf03273ba4f, type: 3}
