@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Portal : MonoBehaviour {
+
+    public static List<Portal> allPortals = new List<Portal>();
+
     [Header ("Main Settings")]
     public Portal linkedPortal;
     public MeshRenderer screen;
@@ -28,6 +31,9 @@ public class Portal : MonoBehaviour {
         screenMeshFilter = screen.GetComponent<MeshFilter> ();
         screen.material.SetInt ("displayMask", 1);
     }
+
+    private void OnEnable() => allPortals.Add(this);
+    private void OnDisable() => allPortals.Remove(this);
 
     void LateUpdate () {
         HandleTravellers ();

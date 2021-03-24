@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+
+//  Thanks to https://forum.unity.com/threads/get-the-layernumber-from-a-layermask.114553/
 public static class LayerMaskExtensions
 {
     /// <summary> Converts given layermask to layer number </summary>

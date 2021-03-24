@@ -114,6 +114,7 @@ public class Map : ScriptableObject
 
         int xLength = walls.GetLength(0);
         int zLength = walls.GetLength(1);
+        int i = 0;
 
         for (int x = 0; x < xLength; x++)
         {
@@ -124,6 +125,10 @@ public class Map : ScriptableObject
 
                 p1.linkedPortal = p2;
                 p2.linkedPortal = p1;
+
+                p1.gameObject.name = $"PortalA {i}";
+                p2.gameObject.name = $"PortalB {i}";
+                i++;
             }
         }
         for (int z = 0; z < zLength; z++)
@@ -136,6 +141,10 @@ public class Map : ScriptableObject
 
                 p1.linkedPortal = p2;
                 p2.linkedPortal = p1;
+
+                p1.gameObject.name = $"PortalA {i}";
+                p2.gameObject.name = $"PortalB {i}";
+                i++;
             }
         }
     }

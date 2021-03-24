@@ -1,5 +1,48 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8145642351209020438
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79c756fe45ae37747864bbe1e991ae38, type: 3}
+  m_Name: EdgeDetect_AfterStack
+  m_EditorClassIdentifier: 
+  active: 1
+  enabled:
+    overrideState: 1
+    value: 1
+  mode:
+    overrideState: 1
+    value: 0
+  sensitivityDepth:
+    overrideState: 0
+    value: 1
+  sensitivityNormals:
+    overrideState: 0
+    value: 1
+  lumThreshold:
+    overrideState: 0
+    value: 0.2
+  edgeExp:
+    overrideState: 0
+    value: 1
+  sampleDist:
+    overrideState: 1
+    value: 2
+  edgesOnly:
+    overrideState: 0
+    value: 0
+  edgesOnlyBgColor:
+    overrideState: 0
+    value: {r: 1, g: 1, b: 1, a: 1}
+  edgesColor:
+    overrideState: 1
+    value: {r: 0, g: 0.5019608, b: 1, a: 1}
 --- !u!114 &-7772655983653485226
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -1457,10 +1500,10 @@ MonoBehaviour:
   - {fileID: -4264388577902839398}
   - {fileID: -7200728077858455148}
   - {fileID: 1913894804401366845}
-  - {fileID: 6975558900573729557}
   - {fileID: -7772655983653485226}
   - {fileID: -3335813913957497558}
   - {fileID: 6001737628170624661}
+  - {fileID: -8145642351209020438}
 --- !u!114 &1913894804401366845
 MonoBehaviour:
   m_ObjectHideFlags: 3

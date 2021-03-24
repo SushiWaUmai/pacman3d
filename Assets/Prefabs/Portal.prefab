@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2892272666850212130}
   - component: {fileID: 2892272666850212140}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -62,7 +62,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 55
+    m_Bits: 4294967295
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -85,7 +85,7 @@ GameObject:
   - component: {fileID: 4033442730571380108}
   - component: {fileID: 5262053669528178845}
   - component: {fileID: 2809730304641585416}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Portal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -149,7 +149,7 @@ GameObject:
   - component: {fileID: 3677398203771925305}
   - component: {fileID: 774985159684339720}
   - component: {fileID: 4287508941421907959}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}

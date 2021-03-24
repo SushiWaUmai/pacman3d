@@ -24,6 +24,7 @@ MonoBehaviour:
     m_Name: package.openupm.com
     m_Url: https://package.openupm.com
     m_Scopes:
+    - com.agm.edge-detection
     - com.danieleverland.scriptableobjectarchitecture
     - com.dbrizov.naughtyattributes
     - com.dubitlimited.duck.utils
@@ -38,6 +39,7 @@ MonoBehaviour:
       m_Name: package.openupm.com
       m_Url: https://package.openupm.com
       m_Scopes:
+      - com.agm.edge-detection
       - com.danieleverland.scriptableobjectarchitecture
       - com.dbrizov.naughtyattributes
       - com.dubitlimited.duck.utils
@@ -47,6 +49,7 @@ MonoBehaviour:
     m_Name: package.openupm.com
     m_Url: https://package.openupm.com
     m_Scopes:
+    - com.agm.edge-detection
     - com.danieleverland.scriptableobjectarchitecture
     - com.dbrizov.naughtyattributes
     - com.dubitlimited.duck.utils

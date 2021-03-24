@@ -6,7 +6,7 @@ using NaughtyAttributes;
 
 public class UILoader : MonoBehaviour
 {
-    [Scene] private string UIScene;
+    [Scene, SerializeField] private string UIScene;
 
     private void Start()
     {

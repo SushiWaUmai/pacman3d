@@ -6,7 +6,7 @@ public  class MapLoader : MonoBehaviour
 {
     [SerializeField] private Map mapToLoad;
 
-    private void Start()
+    private void Awake()
     {
         mapToLoad.LoadMap();
     }
