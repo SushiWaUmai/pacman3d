@@ -65,6 +65,7 @@ public class Map : ScriptableObject
     private void CreateMap()
     {
         GameObject map = new GameObject(mapTexture.name);
+        map.AddComponent<GridbasedPathfinding>().CreateGrid(walls);
         CreateWalls(map.transform);
         CreateCollectables(map.transform);
         CreatePortals(map.transform);
