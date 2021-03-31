@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class MainCamera : MonoBehaviour 
 {
+    private void Start()
+    {
+        Portal.playerCam = Camera.main;
+    }
+
     private void OnPreCull () 
     {
         List<Portal> portals = Portal.allPortals;

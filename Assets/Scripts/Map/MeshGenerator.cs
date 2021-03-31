@@ -108,6 +108,114 @@ public class MeshGenerator
         return result;
     }
 
+    public static Mesh MeshCubesFromHeightMap(bool[,] heightMap, int tileSize)
+    {
+
+        Mesh result = new Mesh();
+        List<Vector3> verts = new List<Vector3>();
+        List<int> tris = new List<int>();
+        int i = 0;
+
+        for (int x = 0; x < heightMap.GetLength(0); x++)
+        {
+            for (int z = 0; z < heightMap.GetLength(1); z++)
+            {
+                if(heightMap[x, z])
+                {
+                    verts.Add(new Vector3(x, 1, z) * tileSize);
+                    verts.Add(new Vector3(x + 1, 1, z) * tileSize);
+                    verts.Add(new Vector3(x, 1, z + 1) * tileSize);
+                    verts.Add(new Vector3(x + 1, 1, z + 1) * tileSize);
+
+                    tris.Add(0 + i * 4);
+                    tris.Add(2 + i * 4);
+                    tris.Add(1 + i * 4);
+                    tris.Add(2 + i * 4);
+                    tris.Add(3 + i * 4);
+                    tris.Add(1 + i * 4);
+                    i++;
+                }
+            }
+        }
+
+        for (int x = 0; x < heightMap.GetLength(0); x++)
+        {
+            for (int z = 0; z < heightMap.GetLength(1); z++)
+            {
+                if (x + 1 < heightMap.GetLength(0))
+                {
+                    if (heightMap[x, z] ^ heightMap[x + 1, z])
+                    {
+
+                        verts.Add(new Vector3(x + 1, 0, z + 1) * tileSize);
+                        verts.Add(new Vector3(x + 1, 0, z) * tileSize);
+                        verts.Add(new Vector3(x + 1, 1, z + 1) * tileSize);
+                        verts.Add(new Vector3(x + 1, 1, z) * tileSize);
+
+
+                        if (heightMap[x, z])
+                        {
+                            tris.Add(1 + i * 4);
+                            tris.Add(2 + i * 4);
+                            tris.Add(0 + i * 4);
+                            tris.Add(1 + i * 4);
+                            tris.Add(3 + i * 4);
+                            tris.Add(2 + i * 4);
+                        }
+                        else
+                        {
+                            tris.Add(0 + i * 4);
+                            tris.Add(2 + i * 4);
+                            tris.Add(1 + i * 4);
+                            tris.Add(2 + i * 4);
+                            tris.Add(3 + i * 4);
+                            tris.Add(1 + i * 4);
+                        }
+                        i++;
+
+                    }
+                }
+
+                if (z + 1 < heightMap.GetLength(1))
+                {
+                    if (heightMap[x, z] ^ heightMap[x, z + 1])
+                    {
+                        verts.Add(new Vector3(x, 0, z + 1) * tileSize);
+                        verts.Add(new Vector3(x + 1, 0, z + 1) * tileSize);
+                        verts.Add(new Vector3(x, 1, z + 1) * tileSize);
+                        verts.Add(new Vector3(x + 1, 1, z + 1) * tileSize);
+
+                        if (heightMap[x, z])
+                        {
+                            tris.Add(1 + i * 4);
+                            tris.Add(2 + i * 4);
+                            tris.Add(0 + i * 4);
+                            tris.Add(1 + i * 4);
+                            tris.Add(3 + i * 4);
+                            tris.Add(2 + i * 4);
+                        }
+                        else
+                        {
+                            tris.Add(0 + i * 4);
+                            tris.Add(2 + i * 4);
+                            tris.Add(1 + i * 4);
+                            tris.Add(2 + i * 4);
+                            tris.Add(3 + i * 4);
+                            tris.Add(1 + i * 4);
+                        }
+                        i++;
+                    }
+                }
+            }
+        }
+
+        result.vertices = verts.ToArray();
+        result.triangles = tris.ToArray();
+        result.RecalculateNormals();
+
+        return result;
+    }
+
     public static Mesh MinimapMeshFromHeighMap(int width, int height, int tileSize)
     {
         Mesh result = new Mesh();

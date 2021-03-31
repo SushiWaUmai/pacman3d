@@ -14,6 +14,7 @@ public abstract class GhostMovement : Movement
 
     [SerializeField] protected MovementMode current;
     [SerializeField] private GameEvent OnPowerPelletCollect;
+    [SerializeField] private float minTileDistance = 0.1f;
 
     protected override void Init()
     {
@@ -21,18 +22,19 @@ public abstract class GhostMovement : Movement
         OnPowerPelletCollect.AddListener(() => current = MovementMode.Frightened);
     }
 
-    protected override void Move()
+    protected override void PhysicsUpdate()
     {
-        base.Move();
-    }
+        base.PhysicsUpdate();
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("Intersection"))
+        Vector3 ghostPos = Vector3.Scale(new Vector3(1, 0, 1), transform.position);
+        Vector3 alignedPos = Map.AlignToGrid(transform.position);
+        Vector3 checkPos = Vector3.Scale(new Vector3(1, 0, 1), alignedPos);
+        if ((ghostPos - checkPos).sqrMagnitude < minTileDistance * minTileDistance)
         {
-            CalculateDirection(other.transform.position);
+            transform.position = alignedPos;
+            CalculateDirection(Map.PositionToIndex(alignedPos));
         }
     }
 
-    protected abstract void CalculateDirection(Vector3 position);
+    protected abstract void CalculateDirection(Vector2Int position);
 }

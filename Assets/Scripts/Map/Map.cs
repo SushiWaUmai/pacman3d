@@ -6,10 +6,13 @@ using NaughtyAttributes;
 [CreateAssetMenu]
 public class Map : ScriptableObject
 {
+    private static Map current;
+
     [Header("Map Properties")]
     [SerializeField, ShowAssetPreview] private Texture2D mapTexture;
     [SerializeField] private int tileSize = 2;
-    [SerializeField] private Material mapMaterial;
+    [SerializeField] private Material wallMaterial;
+    [SerializeField] private Material ghostTraversableWallMaterial;
     
     [Header("Minimap")]
     [ShowNonSerializedField, ShowAssetPreview] private Texture2D minimapTexture;
@@ -17,18 +20,31 @@ public class Map : ScriptableObject
     [SerializeField] private Material miniMapMaterial;
 
     [Header("Prefabs")]
+    [SerializeField] private GameObject playerPrefab;
     [SerializeField] private GameObject pellet;
     [SerializeField] private GameObject powerPellet;
     [SerializeField] private GameObject portal;
+
+    [Header("Tile Colors")]
+    [SerializeField] private Color wallColor;
+    [SerializeField] private Color ghostWallColor;
+    [SerializeField] private Color playerColor;
+    [SerializeField] private Color pelletColor;
+    [SerializeField] private Color powerPelletColor;
+
+    [Header("Ghost Exit")]
+    [SerializeField] private LayerMask ghostTraversableLayer;
     private bool[,] walls;
     private List<Vector2Int> pelletPositions = new List<Vector2Int>();
     private List<Vector2Int> powerPelletPositions = new List<Vector2Int>();
-
+    private List<Vector2Int> ghostTraversablePositions = new List<Vector2Int>();
+    private Vector2Int playerPosition;
     
 
     [Button]
     public void LoadMap()
     {
+        current = this;
         LoadMapTexture();
         CreateMap();
     }
@@ -54,12 +70,16 @@ public class Map : ScriptableObject
 
         if (col.a == 0)
             return;
-        if (col == Color.black)
+        if (col == wallColor)
             walls[x, y] = true;
-        else if (col == new Color(1, 1, 0, 1))
+        else if (col == pelletColor)
             pelletPositions.Add(new Vector2Int(x, y));
-        else if (col == Color.red)
+        else if (col == powerPelletColor)
             powerPelletPositions.Add(new Vector2Int(x, y));
+        else if (col == ghostWallColor)
+            ghostTraversablePositions.Add(new Vector2Int(x, y));
+        else if (col == playerColor)
+            playerPosition = new Vector2Int(x, y);
     }
 
     private void CreateMap()
@@ -70,19 +90,75 @@ public class Map : ScriptableObject
         CreateCollectables(map.transform);
         CreatePortals(map.transform);
         CreateMiniMap(map.transform);
+
+        // Create Player
+        CreatePrefab(map.transform, playerPrefab, playerPosition, "Pacman Player");
     }
 
     private void CreateWalls(Transform parentTransform)
     {
-        GameObject wallGO = new GameObject("Walls");
+        // Add a GameObject to hold the walls
+        GameObject wallHolder = new GameObject("Walls");
+        wallHolder.transform.parent = parentTransform;
+
+        // Create the walls
+        CreateNormalWalls(wallHolder.transform);
+        CreateGhostTraversableWalls(wallHolder.transform);
+    }
+
+    private void CreateGhostTraversableWalls(Transform parentTransform)
+    {
+        // Create GameObject and set parent and layer
+        GameObject ghostTraversable = new GameObject("Ghost Traversable Walls");
+        ghostTraversable.transform.parent = parentTransform;
+        ghostTraversable.layer = ghostTraversableLayer.ToLayer();
+
+        // Add Components to GameObject
+        MeshRenderer wallRenderer = ghostTraversable.AddComponent<MeshRenderer>();
+        MeshFilter wallMeshFilter = ghostTraversable.AddComponent<MeshFilter>();
+        MeshCollider wallCollider = ghostTraversable.AddComponent<MeshCollider>();
+
+        // Create height map from list of vec2ints
+        bool[,] ghostExitHeightMap = new bool[mapTexture.width, mapTexture.height];
+        for (int x = 0; x < mapTexture.width; x++)
+        {
+            for (int y = 0; y < mapTexture.height; y++)
+            {
+                if (ghostTraversablePositions.Contains(new Vector2Int(x, y)))
+                    ghostExitHeightMap[x, y] = true;
+            }
+        }
+
+        // Create a mesh from heightmap
+        Mesh wallMesh = MeshGenerator.MeshCubesFromHeightMap(ghostExitHeightMap, tileSize);
+
+        // Make mesh convex
+        wallCollider.convex = true;
+
+        // Add Mesh to components
+        wallCollider.sharedMesh = wallMesh;
+        wallMeshFilter.sharedMesh = wallMesh;
+        wallRenderer.sharedMaterial = ghostTraversableWallMaterial;
+    }
+
+    private void CreateNormalWalls(Transform parentTransform)
+    {
+        // Create GameObject and set parent
+        GameObject wallGO = new GameObject("Normal Wall");
         wallGO.transform.parent = parentTransform;
+
+        // Add Components to GameObjects
         MeshRenderer wallRenderer = wallGO.AddComponent<MeshRenderer>();
         MeshFilter wallMeshFilter = wallGO.AddComponent<MeshFilter>();
         MeshCollider wallCollider = wallGO.AddComponent<MeshCollider>();
-        Mesh wallMesh = MeshGenerator.MeshFromHeightMap(walls, tileSize); ;
+        
+        // Create Mesh
+        Mesh wallMesh = MeshGenerator.MeshFromHeightMap(walls, tileSize);
+
+        // Add Mesh to Components
         wallMeshFilter.sharedMesh = wallMesh;
         wallCollider.sharedMesh = wallMesh;
-        wallRenderer.sharedMaterial = mapMaterial;
+        wallRenderer.sharedMaterial = wallMaterial;
     }
 
     private void CreateCollectables(Transform parentTransform)
@@ -154,9 +230,14 @@ public class Map : ScriptableObject
     {
         for (int i = 0; i < pos.Count; i++)
         {
-            GameObject pelletGO = Instantiate(prefab, new Vector3(pos[i].x, 0, pos[i].y) * tileSize + Vector3.one * tileSize / 2f - Vector3.up * tileSize / 4f, Quaternion.identity, prefabHolder);
-            pelletGO.name = $"{name} {i}";
+            CreatePrefab(prefabHolder, prefab, pos[i], $"{name} {i}");
         }
+    }
+
+    private void CreatePrefab(Transform prefabHolder, GameObject prefab, Vector2Int pos, string name)
+    {
+        GameObject pelletGO = Instantiate(prefab, IndexToPosition(pos) - Vector3.up * tileSize / 4f, Quaternion.identity, prefabHolder);
+        pelletGO.name = name;
     }
 
     private void CreateMiniMap(Transform parentTransform)
@@ -195,5 +276,20 @@ public class Map : ScriptableObject
 
         result.Apply();
         return result;
+    }
+
+    public static Vector2Int PositionToIndex(Vector3 position)
+    {
+        return Vector2Int.FloorToInt(new Vector2(position.x, position.z) / current.tileSize);
+    }
+
+    public static Vector3 IndexToPosition(Vector2Int index)
+    {
+        return new Vector3(index.x, 0, index.y) * current.tileSize + Vector3.one * current.tileSize / 2f;
+    }
+
+    public static Vector3 AlignToGrid(Vector3 position)
+    {
+        return Vector3Int.FloorToInt(position) + Vector3.one * current.tileSize / 2f;
     }
 }

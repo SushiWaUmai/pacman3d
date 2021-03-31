@@ -14,12 +14,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mapTexture: {fileID: 2800000, guid: caeaf0cda3518bc408252848854e8980, type: 3}
   tileSize: 2
-  mapMaterial: {fileID: 2100000, guid: a595bcbdc45d5b44f9e8030ff9c863e7, type: 2}
+  wallMaterial: {fileID: 2100000, guid: a595bcbdc45d5b44f9e8030ff9c863e7, type: 2}
+  ghostTraversableWallMaterial: {fileID: 2100000, guid: 6f27dba248747b249b77fc10ade99c5a,
+    type: 2}
   minimapLayer:
     serializedVersion: 2
     m_Bits: 256
   miniMapMaterial: {fileID: 2100000, guid: 1cebc6b75ce373e4f9f92c2f6362e898, type: 2}
+  playerPrefab: {fileID: 8328815493879869645, guid: 1b5e4a46bfc2e1a48bc2633138ac5d9b,
+    type: 3}
   pellet: {fileID: 4955072529263123171, guid: 850cc2e29acc34a459ca9d40dcaf8452, type: 3}
   powerPellet: {fileID: 6140882787993858586, guid: f605ab0dc0dd7e44d8c8e84ebf45a827,
     type: 3}
   portal: {fileID: 5444025815372702927, guid: d58dccd029e177b4ba83ebf03273ba4f, type: 3}
+  wallColor: {r: 0, g: 0, b: 0, a: 1}
+  ghostWallColor: {r: 0, g: 1, b: 0, a: 1}
+  playerColor: {r: 1, g: 1, b: 0, a: 1}
+  pelletColor: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
+  powerPelletColor: {r: 1, g: 0, b: 0, a: 1}
+  ghostTraversableLayer:
+    serializedVersion: 2
+    m_Bits: 512
