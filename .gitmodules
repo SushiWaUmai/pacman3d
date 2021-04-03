@@ -1,0 +1,6 @@
+[submodule "PostProcessingEffects"]
+	path = PostProcessingEffects
+	url = https://github.com/8izips/PostProcessingEffects.git
+[submodule "Assets/Third_Party_Assets/Assets/Third_Party_Assets/PostProcessingEffects"]
+	path = Assets/Third_Party_Assets/Assets/Third_Party_Assets/PostProcessingEffects
+	url = https://github.com/8izips/PostProcessingEffects.git

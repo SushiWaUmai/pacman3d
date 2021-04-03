@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using ScriptableObjectArchitecture;
+using UnityTimer;
 
 public class Collectable : MonoBehaviour
 {
     [SerializeField] private IntVariable totalScore;
     [SerializeField] private int score;
+    [SerializeField] private GameObject collectedParticleEffect;
+    [SerializeField] private float effectDuration = 1;
 
     private void Start() => Init();
 
@@ -24,5 +27,7 @@ public class Collectable : MonoBehaviour
     protected virtual void GetCollected()
     {
         totalScore.Value += score;
+
+        Destroy(Instantiate(collectedParticleEffect, transform.position, Quaternion.identity), effectDuration);
     }
 }

@@ -60,6 +60,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   totalScore: {fileID: 11400000, guid: dec92e44a508ffe459b24222b4f6ea7a, type: 2}
   score: 100
+  collectedParticleEffect: {fileID: 5011001965683421491, guid: 654a83b4f832c584d8966d0e2a13b097,
+    type: 3}
+  effectDuration: 1
   OnGameClear: {fileID: 11400000, guid: 07a244f13904c34488aec23282344a9c, type: 2}
   OnPowerPelletCollect: {fileID: 11400000, guid: eec55e1d54dcd4c499fc150e74dd359f,
     type: 2}
