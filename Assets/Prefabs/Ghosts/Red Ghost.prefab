@@ -21,8 +21,11 @@ MonoBehaviour:
     type: 2}
   OnPowerPelletEnd: {fileID: 11400000, guid: d5ccdb20462d3b74d8d2f5089dfdf943, type: 2}
   minTileDistance: 0.1
+  modeChangeIntervall: 10
+  scatterConvergenceSpeed: 0.5
+  scatterProbability: 1
   scatterTargetTile: {x: 0, y: 0}
-  scatterTimeIntervall: 0
+  scatterTimeIntervall: 20
 --- !u!1001 &2129188376615255135
 PrefabInstance:
   m_ObjectHideFlags: 0

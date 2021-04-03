@@ -21,14 +21,19 @@ public abstract class GhostMovement : Movement
     [SerializeField] private float minTileDistance = 0.1f;
     [ShowNonSerializedField] private bool isInIntersection;
 
+    [SerializeField] private float modeChangeIntervall = 10; 
+    [SerializeField] private float scatterConvergenceSpeed = 0.5f;
+    [SerializeField] private float scatterProbability = 1;
     [SerializeField] private Vector2Int scatterTargetTile;
-    [SerializeField] private float scatterTimeIntervall;
+    [SerializeField] private float scatterTimeIntervall = 20;
 
     protected override void Init()
     {
         base.Init();
         this.AttachTimer(scatterTimeIntervall, () => scatterTargetTile = Map.RandomTile, null, true);
-        OnPowerPelletCollect.AddListener(SwitchToFrightened);
+        this.AttachTimer(modeChangeIntervall, SwitchGhostMode, null, true);
+        OnPowerPelletCollect.AddListener(StartFrightenedMode);
+        OnPowerPelletEnd.AddListener(EndFrightenedMode);
     }
 
     private void OnTriggerStay(Collider other)
@@ -42,7 +47,7 @@ public abstract class GhostMovement : Movement
                 List<Vector2Int> validDirections = Map.FindValidDirections(gridPosition);
                 // Remove the option to turn around by 180 degrees
                 Vector2Int currentDir = Vector2Int.RoundToInt(new Vector2(dir.x, dir.z));
-                if (validDirections.Contains(-currentDir))
+                if (validDirections.Contains(-currentDir) && validDirections.Count > 1)
                     validDirections.Remove(-currentDir);
 
 
@@ -57,6 +62,10 @@ public abstract class GhostMovement : Movement
                     case MovementMode.Frightened:
                         FrightenedMovement(validDirections);
                         break;
+                    case MovementMode.Eaten:
+                        EatenMovement();
+                        break;
+                        
                 }
 
                 MovementUpdate();
@@ -71,16 +80,21 @@ public abstract class GhostMovement : Movement
             isInIntersection = false;
     }
 
-    private void ScatterMovement(Vector2Int position, List<Vector2Int> validDirections)
+    protected virtual void ScatterMovement(Vector2Int position, List<Vector2Int> validDirections)
     {
         Vector2Int bestDir = ShortestPath(validDirections, position, scatterTargetTile);
         ApplyDirection(bestDir);
     }
 
-    private void FrightenedMovement(List<Vector2Int> validDirections)
+    protected virtual void FrightenedMovement(List<Vector2Int> validDirections)
     {
         Vector2Int selectedDir = validDirections[Random.Range(0, validDirections.Count)];
         ApplyDirection(selectedDir);
+    }
+
+    protected virtual void EatenMovement()
+    {
+
     }
 
     // Calculates and applies the direction
@@ -107,9 +121,45 @@ public abstract class GhostMovement : Movement
 
     protected void ApplyDirection(Vector2Int direction) => dir = new Vector3(direction.x, 0, direction.y);
 
-    private void SwitchToFrightened()
+    private void StartFrightenedMode()
     {
         current = MovementMode.Frightened;
-        dir = -dir;
+        InvertDirection();
+    }
+
+    private void EndFrightenedMode()
+    {
+        SwitchGhostMode();
+    }
+
+    private void SwitchGhostMode()
+    {
+        MovementMode before = current;
+        if(Random.value < scatterProbability)
+        {
+            current = MovementMode.Scatter;
+            scatterProbability = Mathf.Lerp(scatterProbability, 0, scatterConvergenceSpeed);
+        }
+        else
+        {
+            current = MovementMode.Chase;
+        }
+
+        if(before != MovementMode.Eaten || before != MovementMode.Frightened)
+        {
+            if(before != current)
+            {
+                InvertDirection();
+            }
+        }
+    }
+
+    private void InvertDirection()
+    {
+        if (!isInIntersection)
+        {
+            dir = -dir;
+            MovementUpdate();
+        }
     }
 }

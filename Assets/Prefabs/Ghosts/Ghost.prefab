@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 300664741576605117}
   - component: {fileID: 3731000299012925662}
   - component: {fileID: 8224739600198560634}
+  - component: {fileID: 9002725256063925824}
   m_Layer: 10
   m_Name: Ghost Renderer
   m_TagString: Untagged
@@ -79,6 +80,22 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &9002725256063925824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2579396220879344349}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33efcdf463e14e747b392a8e8d2ece59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FrightenedMaterial: {fileID: 2100000, guid: 5638c3f73b1bc974d8d203159304a302, type: 2}
+  OnPowerPelletCollect: {fileID: 11400000, guid: eec55e1d54dcd4c499fc150e74dd359f,
+    type: 2}
+  OnPowerPelletEnd: {fileID: 11400000, guid: d5ccdb20462d3b74d8d2f5089dfdf943, type: 2}
 --- !u!1 &5377636146613600892
 GameObject:
   m_ObjectHideFlags: 0

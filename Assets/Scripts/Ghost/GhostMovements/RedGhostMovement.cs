@@ -10,4 +10,9 @@ public class RedGhostMovement : GhostMovement
         Vector2Int bestDir = ShortestPath(validDirections, position, PlayerMovement.Position);
         ApplyDirection(bestDir);
     }
+
+    protected override void ScatterMovement(Vector2Int position, List<Vector2Int> validDirections)
+    {
+        CalculateChaseMovementDirection(position, validDirections);
+    }
 }

@@ -1,5 +1,32 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &5084434656432353461
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6281771722408377891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73f2685a014b490428b8b45917697f0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  graphicsObject: {fileID: 4487765278703578754}
+  dir: {x: 0, y: 0, z: 0}
+  entityRotation: 0
+  speed: 5
+  current: 0
+  OnPowerPelletCollect: {fileID: 11400000, guid: eec55e1d54dcd4c499fc150e74dd359f,
+    type: 2}
+  OnPowerPelletEnd: {fileID: 11400000, guid: d5ccdb20462d3b74d8d2f5089dfdf943, type: 2}
+  minTileDistance: 0.1
+  modeChangeIntervall: 10
+  scatterConvergenceSpeed: 0.5
+  scatterProbability: 1
+  scatterTargetTile: {x: 0, y: 0}
+  scatterTimeIntervall: 20
+  distanceToPlayerForScatter: 8
 --- !u!1001 &2129188376615255135
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -74,3 +101,15 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: aee7817c35d1a6a4582aa34f9ccd96d5, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 68be6d0205bf8774e8da4d4c5ef670cf, type: 3}
+--- !u!1 &6281771722408377891 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5377636146613600892, guid: 68be6d0205bf8774e8da4d4c5ef670cf,
+    type: 3}
+  m_PrefabInstance: {fileID: 2129188376615255135}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4487765278703578754 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2579396220879344349, guid: 68be6d0205bf8774e8da4d4c5ef670cf,
+    type: 3}
+  m_PrefabInstance: {fileID: 2129188376615255135}
+  m_PrefabAsset: {fileID: 0}
