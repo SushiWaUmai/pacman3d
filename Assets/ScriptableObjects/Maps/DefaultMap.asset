@@ -27,11 +27,25 @@ MonoBehaviour:
   powerPellet: {fileID: 6140882787993858586, guid: f605ab0dc0dd7e44d8c8e84ebf45a827,
     type: 3}
   portal: {fileID: 5444025815372702927, guid: d58dccd029e177b4ba83ebf03273ba4f, type: 3}
+  intersection: {fileID: 7310510660013674188, guid: 22686a40a1006044f8cf2dc30490e764,
+    type: 3}
+  redGhost: {fileID: 6281771722408377891, guid: 299d6e533bf0ba54cabee02bed5eb6e5,
+    type: 3}
+  cyanGhost: {fileID: 6281771722408377891, guid: f63bf27bee1f68248970b484a4b7f51e,
+    type: 3}
+  pinkGhost: {fileID: 6281771722408377891, guid: aa29403e5e85b5a44b054e105e91ac6d,
+    type: 3}
+  orangeGhost: {fileID: 6281771722408377891, guid: f0d187532021ca8418b6d2cfd8e5ca39,
+    type: 3}
   wallColor: {r: 0, g: 0, b: 0, a: 1}
   ghostWallColor: {r: 0, g: 1, b: 0, a: 1}
   playerColor: {r: 1, g: 1, b: 0, a: 1}
   pelletColor: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
-  powerPelletColor: {r: 1, g: 0, b: 0, a: 1}
+  powerPelletColor: {r: 0.5019608, g: 0.2509804, b: 0, a: 1}
+  redGhostColor: {r: 1, g: 0, b: 0, a: 1}
+  cyanGhostColor: {r: 0, g: 1, b: 1, a: 1}
+  pinkGhostColor: {r: 1, g: 0, b: 1, a: 1}
+  orangeGhostColor: {r: 1, g: 0.5019608, b: 0, a: 1}
   ghostTraversableLayer:
     serializedVersion: 2
     m_Bits: 512

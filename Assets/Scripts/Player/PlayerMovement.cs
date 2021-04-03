@@ -43,4 +43,9 @@ public class PlayerMovement : Movement
 
         base.Init();
     }
+
+    private void FixedUpdate()
+    {
+        MovementUpdate();
+    }
 }

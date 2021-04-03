@@ -1,9 +1,9 @@
 {
   "dependencies": {
     "com.agm.edge-detection": "1.1.0",
+    "com.akbiggs.unitytimer": "https://github.com/akbiggs/UnityTimer.git",
     "com.danieleverland.scriptableobjectarchitecture": "1.6.4",
     "com.dbrizov.naughtyattributes": "2.0.8",
-    "com.dubitlimited.duck.utils": "1.3.2",
     "com.unity.collab-proxy": "1.2.16",
     "com.unity.ide.rider": "1.1.4",
     "com.unity.ide.vscode": "1.2.3",

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 300664741576605117}
   - component: {fileID: 3731000299012925662}
   - component: {fileID: 8224739600198560634}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Ghost Renderer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -91,7 +91,7 @@ GameObject:
   - component: {fileID: 8859914954155145056}
   - component: {fileID: 8910812834912167033}
   - component: {fileID: 1795991164669526183}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Ghost
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -139,7 +139,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 116
   m_CollisionDetection: 0
 --- !u!135 &1795991164669526183
 SphereCollider:

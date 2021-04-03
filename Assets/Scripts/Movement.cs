@@ -16,17 +16,12 @@ public class Movement : PortalTraveller
         Init();   
     }
 
-    private void FixedUpdate()
-    {
-        PhysicsUpdate();
-    }
-
     protected virtual void Init()
     {
         rb = GetComponent<Rigidbody>();
     }
 
-    protected virtual void PhysicsUpdate()
+    protected void MovementUpdate()
     {
         rb.velocity = dir * speed;
         transform.rotation = Quaternion.AngleAxis(entityRotation, Vector2.up);
