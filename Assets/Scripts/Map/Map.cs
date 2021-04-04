@@ -145,6 +145,8 @@ public class Map : ScriptableObject
         // Create the walls
         CreateNormalWalls(wallHolder.transform);
         CreateGhostTraversableWalls(wallHolder.transform);
+
+        MakeStatic(wallHolder.transform);
     }
 
     private void CreateGhostTraversableWalls(Transform parentTransform)
@@ -209,6 +211,9 @@ public class Map : ScriptableObject
 
         CreatePrefabWithHierarchy(collectables.transform, "Pellets", pellet, pelletPositions, "Pellet");
         CreatePrefabWithHierarchy(collectables.transform, "Power Pellets", powerPellet, powerPelletPositions, "Power Pellet");
+
+
+        MakeStatic(collectables.transform);
     }
 
     private void CreatePortals(Transform parentTransform)
@@ -264,11 +269,14 @@ public class Map : ScriptableObject
         CreatePrefabWithHierarchy(ghostHolder.transform, "Orange Ghosts (Clyde)", orangeGhost, orangeGhostPositions, "Clyde", false);
     }
 
-    private void CreatePrefabWithHierarchy(Transform parentTransform, string holderObjectName, GameObject prefab, List<Vector2Int> positions, string childObjectName, bool addOffset = true)
+    private void CreatePrefabWithHierarchy(Transform parentTransform, string holderObjectName, GameObject prefab, List<Vector2Int> positions, string childObjectName, bool addOffset = true, bool isStatic = false)
     {
         GameObject holder = new GameObject(holderObjectName);
         holder.transform.parent = parentTransform;
         CreatePrefabs(holder.transform, prefab, positions, childObjectName, addOffset);
+
+        if(isStatic)
+            MakeStatic(holder.transform);
     }
 
     private void CreatePrefabs(Transform prefabHolder, GameObject prefab, List<Vector2Int> pos, string name, bool addOffset = true)
@@ -317,7 +325,7 @@ public class Map : ScriptableObject
             }
         }
 
-        CreatePrefabWithHierarchy(parentTransform, "Intersections", intersection, intersectionPositions, "Intersection", false);
+        CreatePrefabWithHierarchy(parentTransform, "Intersections", intersection, intersectionPositions, "Intersection", false, true);
     }
 
     private bool IsIntersection(int x, int y)
@@ -398,4 +406,16 @@ public class Map : ScriptableObject
     }
 
     public static Vector2Int RandomTile => new Vector2Int(Random.Range(0, current.mapTexture.width), Random.Range(0, current.mapTexture.height));
+
+    private static void MakeStatic(Transform tr)
+    {
+        tr.gameObject.isStatic = true;
+        
+        if (tr.transform.childCount == 0)
+            return;
+
+        // Make all walls static
+        foreach (Transform child in tr.transform)
+            MakeStatic(child);
+    }
 }

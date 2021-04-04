@@ -10,3 +10,12 @@
 [submodule "Assets/Third_Party_Assets/PostProcessingEffects"]
 	path = Assets/Third_Party_Assets/PostProcessingEffects
 	url = https://github.com/8izips/PostProcessingEffects.git
+[submodule "Assets/Third_Party_Assets/Blur-Distance-Blur-for-Unity-Postprocessing-Stack-v2"]
+	path = Assets/Third_Party_Assets/Blur-Distance-Blur-for-Unity-Postprocessing-Stack-v2
+	url = https://github.com/Oxeren/Blur-Distance-Blur-for-Unity-Postprocessing-Stack-v2.git
+[submodule "Assets/Third_Party_Assets/Assets/Blur for Unity Postprocessing stack v2"]
+	path = Assets/Third_Party_Assets/Assets/Blur for Unity Postprocessing stack v2
+	url = https://github.com/Oxeren/Blur-Distance-Blur-for-Unity-Postprocessing-Stack-v2.git
+[submodule "Assets/Third_Party_Assets/SEGI"]
+	path = Assets/Third_Party_Assets/SEGI
+	url = https://github.com/sonicether/SEGI.git
