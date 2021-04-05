@@ -1328,16 +1328,16 @@ MonoBehaviour:
     overrideState: 1
     value: 1
   scanLineJitter:
-    overrideState: 0
+    overrideState: 1
     value: 0
   verticalJump:
-    overrideState: 0
+    overrideState: 1
     value: 0
   horizontalShake:
-    overrideState: 0
+    overrideState: 1
     value: 0
   colorDrift:
-    overrideState: 0
+    overrideState: 1
     value: 0
 --- !u!114 &-7200728077858455148
 MonoBehaviour:
@@ -1446,6 +1446,34 @@ MonoBehaviour:
   scale:
     overrideState: 0
     value: 1
+--- !u!114 &-991755491275900400
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 628adf77471852249b10692fe373aff5, type: 3}
+  m_Name: DistanceBlur
+  m_EditorClassIdentifier: 
+  active: 1
+  enabled:
+    overrideState: 1
+    value: 0
+  Iterations:
+    overrideState: 0
+    value: 5
+  EnableDistance:
+    overrideState: 0
+    value: 1
+  StartDistance:
+    overrideState: 0
+    value: 1
+  EndDistance:
+    overrideState: 0
+    value: 1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1466,8 +1494,8 @@ MonoBehaviour:
   - {fileID: -3335813913957497558}
   - {fileID: 6001737628170624661}
   - {fileID: 7870408580363950056}
-  - {fileID: 5340931261758429801}
   - {fileID: -7508891684725852448}
+  - {fileID: -991755491275900400}
 --- !u!114 &1913894804401366845
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -1510,34 +1538,6 @@ MonoBehaviour:
     value: {fileID: 0}
     defaultState: 1
   opacity:
-    overrideState: 0
-    value: 1
---- !u!114 &5340931261758429801
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 628adf77471852249b10692fe373aff5, type: 3}
-  m_Name: DistanceBlur
-  m_EditorClassIdentifier: 
-  active: 1
-  enabled:
-    overrideState: 1
-    value: 0
-  Iterations:
-    overrideState: 1
-    value: 1
-  EnableDistance:
-    overrideState: 1
-    value: 0
-  StartDistance:
-    overrideState: 0
-    value: 1
-  EndDistance:
     overrideState: 0
     value: 1
 --- !u!114 &6001737628170624661
@@ -1647,7 +1647,7 @@ MonoBehaviour:
   active: 1
   enabled:
     overrideState: 1
-    value: 0
+    value: 1
   intensity:
     overrideState: 1
     value: 0

@@ -220,7 +220,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   totalScore: {fileID: 11400000, guid: dec92e44a508ffe459b24222b4f6ea7a, type: 2}
-  score: 50
+  score: 10
   collectedParticleEffect: {fileID: 5011001965683421491, guid: 654a83b4f832c584d8966d0e2a13b097,
     type: 3}
   effectDuration: 1

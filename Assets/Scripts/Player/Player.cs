@@ -5,30 +5,38 @@ using ScriptableObjectArchitecture;
 using UnityTimer;
 using NaughtyAttributes;
 
-[RequireComponent(typeof(PlayerPostProcessing))]
 public class Player : MonoBehaviour
 {
     [SerializeField] private GameEvent OnPowerPalletCollect;
     [SerializeField] private GameEvent OnPowerPalletEnd;
+    [SerializeField] private GameEvent OnPlayerDie;
     [SerializeField] private float powerPalletTime;
     [ShowNonSerializedField] private bool canKillGhost;
 
     [Header("Post Processing")]
+    [SerializeField] private PlayerPostProcessing playerPostProcessing;
     [SerializeField] private LayerMask ghostLayer;
-    [SerializeField] private float maxDistance;
-    private PlayerPostProcessing playerPostProcessing;
+    [SerializeField] private float maxDistance = 10;
+
+    private Timer powerPelletTimer;
 
     private void Start()
     {
-        playerPostProcessing = GetComponent<PlayerPostProcessing>();
         OnPowerPalletCollect.AddListener(PowerPelletCollect);
         OnPowerPalletEnd.AddListener(PowerPelletEnd);
+        Ghost.ResetKillCount();
     }
 
     private void PowerPelletCollect()
     {
         canKillGhost = true;
-        this.AttachTimer(powerPalletTime, OnPowerPalletEnd.Raise);
+        Ghost.ResetKillCount();
+        playerPostProcessing.SetGlitchIntensity(0);
+
+        if (powerPelletTimer != null)
+            powerPelletTimer.Cancel();
+
+        powerPelletTimer = this.AttachTimer(powerPalletTime, OnPowerPalletEnd.Raise);
     }
 
     private void PowerPelletEnd()
@@ -38,19 +46,22 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Collider[] ghosts = Physics.OverlapSphere(transform.position, maxDistance, ghostLayer);
-
-        float closestGhostSqrDistance = float.MaxValue;
-        foreach (Collider c in ghosts)
+        if (!canKillGhost)
         {
-            float sqrMag = (c.transform.position - transform.position).sqrMagnitude;
-            if (sqrMag < closestGhostSqrDistance)
-                closestGhostSqrDistance = sqrMag;
-        }
-        float dist = Mathf.Sqrt(closestGhostSqrDistance);
-        float val = Mathf.Clamp01(closestGhostSqrDistance / maxDistance);
+            Collider[] ghosts = Physics.OverlapSphere(transform.position, maxDistance, ghostLayer);
 
-        playerPostProcessing.SetGlitchIntensity(val);
+            float closestGhostSqrDistance = float.MaxValue;
+            foreach (Collider c in ghosts)
+            {
+                float sqrMag = (c.transform.position - transform.position).sqrMagnitude;
+                if (sqrMag < closestGhostSqrDistance)
+                    closestGhostSqrDistance = sqrMag;
+            }
+            float dist = Mathf.Sqrt(closestGhostSqrDistance);
+            float val = 1 - Mathf.Clamp01(dist / maxDistance);
+
+            playerPostProcessing.SetGlitchIntensity(val);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -70,6 +81,8 @@ public class Player : MonoBehaviour
     
     private void Die()
     {
-        Debug.Log("Player Died");
+        OnPlayerDie.Raise();
+        playerPostProcessing.GlitchOut();
+        Time.timeScale = 0;
     }
 }

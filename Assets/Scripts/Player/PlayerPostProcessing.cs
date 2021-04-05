@@ -29,4 +29,17 @@ public class PlayerPostProcessing : MonoBehaviour
         analogGlitch.horizontalShake.value = Mathf.Lerp(0, horizontalShakeIntensity, glitchValue);
         analogGlitch.colorDrift.value = Mathf.Lerp(0, colorDriftIntensity, glitchValue);
     }
+
+    public void ResetPlayer()
+    {
+
+    }
+
+    public void GlitchOut()
+    {
+        digitalGlitch.intensity.value = 1;
+        analogGlitch.scanLineJitter.value = 1;
+        analogGlitch.horizontalShake.value = 1;
+        analogGlitch.colorDrift.value = 1;
+    }
 }
