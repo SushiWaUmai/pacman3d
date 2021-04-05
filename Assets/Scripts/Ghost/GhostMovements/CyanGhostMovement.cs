@@ -14,13 +14,10 @@ public class CyanGhostMovement : GhostMovement
         redGhostTransform = rgms[Random.Range(0, rgms.Length)].transform;
     }
 
-    protected override void CalculateChaseMovementDirection(Vector2Int position, List<Vector2Int> validDirections)
+    protected override void UpateChaseTargetTile(Vector2Int position)
     {
         Vector2 playerPos = PlayerMovement.Position + PlayerMovement.Direction * predictionTiles;
         Vector2Int redPos = Map.PositionToIndex(redGhostTransform.position);
-        Vector2 targetPos = (playerPos - redPos) * 2 + redPos;
-
-        Vector2Int bestDir = ShortestPath(validDirections, position, targetPos);
-        ApplyDirection(bestDir);
+        targetTile = (playerPos - redPos) * 2 + redPos;
     }
 }

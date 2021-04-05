@@ -15,23 +15,31 @@ public abstract class GhostMovement : Movement
         Eaten
     }
 
+    #region Variables
+
     [SerializeField] protected MovementMode current;
     [SerializeField] private GameEvent OnPowerPelletCollect;
     [SerializeField] private GameEvent OnPowerPelletEnd;
+
     [SerializeField] private float minTileDistance = 0.1f;
     [ShowNonSerializedField] private bool isInIntersection;
 
     [SerializeField] private float modeChangeIntervall = 10; 
     [SerializeField] private float scatterConvergenceSpeed = 0.5f;
     [SerializeField] private float scatterProbability = 1;
-    [SerializeField] private Vector2Int scatterTargetTile;
+    [SerializeField] protected Vector2 targetTile;
     [SerializeField] private float scatterTimeIntervall = 20;
+
+    public event System.Action OnGhostEaten;
+    public event System.Action OnGhostRecover;
+
+    #endregion
 
     protected override void Init()
     {
         base.Init();
-        this.AttachTimer(scatterTimeIntervall, () => scatterTargetTile = Map.RandomTile, null, true);
-        this.AttachTimer(modeChangeIntervall, SwitchGhostMode, null, true);
+        this.AttachTimer(scatterTimeIntervall, SelectScatterTargetTile, null, true);
+        this.AttachTimer(modeChangeIntervall, () => SwitchGhostMode(), null, true);
         OnPowerPelletCollect.AddListener(StartFrightenedMode);
         OnPowerPelletEnd.AddListener(EndFrightenedMode);
     }
@@ -43,34 +51,13 @@ public abstract class GhostMovement : Movement
             if (!isInIntersection && (transform.position - other.gameObject.transform.position).sqrMagnitude < minTileDistance * minTileDistance)
             {
                 transform.position = other.transform.position;
-                Vector2Int gridPosition = Map.PositionToIndex(transform.position);
-                List<Vector2Int> validDirections = Map.FindValidDirections(gridPosition);
-                // Remove the option to turn around by 180 degrees
-                Vector2Int currentDir = Vector2Int.RoundToInt(new Vector2(dir.x, dir.z));
-                if (validDirections.Contains(-currentDir) && validDirections.Count > 1)
-                    validDirections.Remove(-currentDir);
-
-
-                switch (current)
-                {
-                    case MovementMode.Chase:
-                        CalculateChaseMovementDirection(gridPosition, validDirections);
-                        break;
-                    case MovementMode.Scatter:
-                        ScatterMovement(gridPosition, validDirections);
-                        break;
-                    case MovementMode.Frightened:
-                        FrightenedMovement(validDirections);
-                        break;
-                    case MovementMode.Eaten:
-                        EatenMovement();
-                        break;
-                        
-                }
-
-                MovementUpdate();
+                InIntersection();
                 isInIntersection = true;
             }
+        }
+        else if(other.gameObject.CompareTag("GhostHouse"))
+        {
+            InGhostHouse();
         }
     }
 
@@ -80,9 +67,53 @@ public abstract class GhostMovement : Movement
             isInIntersection = false;
     }
 
-    protected virtual void ScatterMovement(Vector2Int position, List<Vector2Int> validDirections)
+    private void InIntersection()
     {
-        Vector2Int bestDir = ShortestPath(validDirections, position, scatterTargetTile);
+        Vector2Int gridPosition = Map.PositionToIndex(transform.position);
+        List<Vector2Int> validDirections = Map.FindValidDirections(gridPosition);
+        // Remove the option to turn around by 180 degrees
+        Vector2Int currentDir = Vector2Int.RoundToInt(new Vector2(dir.x, dir.z));
+        if (validDirections.Contains(-currentDir) && validDirections.Count > 1)
+            validDirections.Remove(-currentDir);
+
+
+        switch (current)
+        {
+            case MovementMode.Chase:
+                UpateChaseTargetTile(gridPosition);
+                ShortestPathMovement(gridPosition, validDirections);
+                break;
+            case MovementMode.Scatter:
+                ShortestPathMovement(gridPosition, validDirections);
+                break;
+            case MovementMode.Frightened:
+                FrightenedMovement(validDirections);
+                break;
+            case MovementMode.Eaten:
+                ShortestPathMovement(gridPosition, validDirections);
+                break;
+
+        }
+
+        entityRotation = Vector3.SignedAngle(Vector3.forward, dir, Vector3.up);
+
+        MovementUpdate();
+    }
+
+    private void InGhostHouse()
+    {
+        if (current == MovementMode.Eaten)
+        {
+            SwitchGhostMode(true);
+            OnGhostRecover.Invoke();
+        }
+    }
+
+    #region Movement
+
+    protected virtual void ShortestPathMovement(Vector2Int position, List<Vector2Int> validDirections)
+    {
+        Vector2Int bestDir = ShortestPath(validDirections, position, targetTile);
         ApplyDirection(bestDir);
     }
 
@@ -92,13 +123,8 @@ public abstract class GhostMovement : Movement
         ApplyDirection(selectedDir);
     }
 
-    protected virtual void EatenMovement()
-    {
-
-    }
-
     // Calculates and applies the direction
-    protected abstract void CalculateChaseMovementDirection(Vector2Int position, List<Vector2Int> validDirections);
+    protected abstract void UpateChaseTargetTile(Vector2Int position);
 
     protected Vector2Int ShortestPath(List<Vector2Int> directions, Vector2Int pos, Vector2 to)
     {
@@ -121,6 +147,31 @@ public abstract class GhostMovement : Movement
 
     protected void ApplyDirection(Vector2Int direction) => dir = new Vector3(direction.x, 0, direction.y);
 
+    private void InvertDirection()
+    {
+        if (!isInIntersection)
+        {
+            dir = -dir;
+            entityRotation = Vector3.SignedAngle(Vector3.forward, dir, Vector3.up);
+            MovementUpdate();
+        }
+    }
+
+    private void SelectScatterTargetTile()
+    {
+        if(current == MovementMode.Scatter)
+            targetTile = Map.RandomTile;
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawLine(transform.position, Map.IndexToPosition(Vector2Int.RoundToInt(targetTile)));
+    }
+
+    #endregion
+
+    #region State Management
+
     private void StartFrightenedMode()
     {
         current = MovementMode.Frightened;
@@ -129,37 +180,44 @@ public abstract class GhostMovement : Movement
 
     private void EndFrightenedMode()
     {
-        SwitchGhostMode();
+        if(current != MovementMode.Eaten)
+            SwitchGhostMode(true);
     }
 
-    private void SwitchGhostMode()
+    private void SwitchGhostMode(bool fromFrightenedOrEaten = false)
     {
-        MovementMode before = current;
-        if(Random.value < scatterProbability)
+        if(current == MovementMode.Chase || current == MovementMode.Scatter || fromFrightenedOrEaten)
         {
-            current = MovementMode.Scatter;
-            scatterProbability = Mathf.Lerp(scatterProbability, 0, scatterConvergenceSpeed);
-        }
-        else
-        {
-            current = MovementMode.Chase;
-        }
-
-        if(before != MovementMode.Eaten || before != MovementMode.Frightened)
-        {
-            if(before != current)
+            MovementMode before = current;
+            if(Random.value < scatterProbability)
             {
-                InvertDirection();
+                current = MovementMode.Scatter;
+                SelectScatterTargetTile();
+                scatterProbability = Mathf.Lerp(scatterProbability, 0, scatterConvergenceSpeed);
+            }
+            else
+            {
+                current = MovementMode.Chase;
+            }
+
+            if(before != MovementMode.Eaten || before != MovementMode.Frightened)
+            {
+                if(before != current)
+                {
+                    InvertDirection();
+                }
             }
         }
     }
 
-    private void InvertDirection()
+    public void GetEaten()
     {
-        if (!isInIntersection)
-        {
-            dir = -dir;
-            MovementUpdate();
-        }
+        current = MovementMode.Eaten;
+        targetTile = Map.GetRandomGhostHousePosition();
+        InvertDirection();
+
+        OnGhostEaten.Invoke();
     }
+
+    #endregion
 }

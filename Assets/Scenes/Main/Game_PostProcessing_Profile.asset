@@ -65,7 +65,7 @@ MonoBehaviour:
     value: 0
   saturation:
     overrideState: 1
-    value: 100
+    value: 25
   brightness:
     overrideState: 0
     value: 0
@@ -104,13 +104,13 @@ MonoBehaviour:
     value: 100
   lift:
     overrideState: 1
-    value: {x: 0.7958785, y: 0.98017865, z: 1, w: -0.14051229}
+    value: {x: 0.72335947, y: 0.960276, z: 1, w: -0.14051229}
   gamma:
     overrideState: 0
     value: {x: 1, y: 0.9262132, z: 0.9731379, w: -0.65196556}
   gain:
     overrideState: 1
-    value: {x: 1, y: 0.7884182, z: 0.7844605, w: -0.5752637}
+    value: {x: 1, y: 0.6435726, z: 0.6475301, w: -0.5752637}
   masterCurve:
     overrideState: 0
     value:
@@ -1311,6 +1311,34 @@ MonoBehaviour:
       - 0.5
       - 0.5
       - 0.5
+--- !u!114 &-7508891684725852448
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e31544cabac1b6f42856b38f6a9308a2, type: 3}
+  m_Name: AnalogGlitch
+  m_EditorClassIdentifier: 
+  active: 1
+  enabled:
+    overrideState: 1
+    value: 1
+  scanLineJitter:
+    overrideState: 0
+    value: 0
+  verticalJump:
+    overrideState: 0
+    value: 0
+  horizontalShake:
+    overrideState: 0
+    value: 0
+  colorDrift:
+    overrideState: 0
+    value: 0
 --- !u!114 &-7200728077858455148
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -1439,6 +1467,7 @@ MonoBehaviour:
   - {fileID: 6001737628170624661}
   - {fileID: 7870408580363950056}
   - {fileID: 5340931261758429801}
+  - {fileID: -7508891684725852448}
 --- !u!114 &1913894804401366845
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -1466,7 +1495,7 @@ MonoBehaviour:
     value: {x: 0.5, y: 0.5}
   intensity:
     overrideState: 1
-    value: 0.3
+    value: 0.2
   smoothness:
     overrideState: 1
     value: 1

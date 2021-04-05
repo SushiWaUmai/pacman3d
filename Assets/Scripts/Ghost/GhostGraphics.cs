@@ -12,6 +12,7 @@ public class GhostGraphics : MonoBehaviour
     [SerializeField] private GameEvent OnPowerPelletEnd;
     [ShowNonSerializedField] private Material ghostOrigMaterial;
     [ShowNonSerializedField] private Renderer ghostRenderer;
+    [SerializeField] private GhostMovement ghostMvment;
 
     private void Start()
     {
@@ -20,6 +21,17 @@ public class GhostGraphics : MonoBehaviour
 
         OnPowerPelletCollect.AddListener(PowerPelletStart);
         OnPowerPelletEnd.AddListener(PowerPelletEnd);
+
+
+        Transform current = transform;
+        while (!ghostMvment)
+        {
+            ghostMvment = current.GetComponent<GhostMovement>();
+            current = current.parent;
+        }
+
+        ghostMvment.OnGhostEaten += GhostEaten;
+        ghostMvment.OnGhostRecover += GhostRecover;
     }
 
     private void PowerPelletStart()
@@ -30,5 +42,16 @@ public class GhostGraphics : MonoBehaviour
     private void PowerPelletEnd()
     {
         ghostRenderer.sharedMaterial = ghostOrigMaterial;
+    }
+
+    private void GhostEaten()
+    {
+        PowerPelletEnd();
+        ghostRenderer.gameObject.SetActive(false);
+    }
+
+    private void GhostRecover()
+    {
+        ghostRenderer.gameObject.SetActive(true);
     }
 }

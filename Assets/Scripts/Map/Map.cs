@@ -6,6 +6,8 @@ using NaughtyAttributes;
 [CreateAssetMenu]
 public class Map : ScriptableObject
 {
+    #region Variables
+
     private static Map current;
 
     [Header("Map Properties")]
@@ -25,6 +27,7 @@ public class Map : ScriptableObject
     [SerializeField] private GameObject powerPellet;
     [SerializeField] private GameObject portal;
     [SerializeField] private GameObject intersection;
+    [SerializeField] private GameObject ghostHouse;
 
     [Header("Ghosts")]
     [SerializeField] private GameObject redGhost;
@@ -38,6 +41,7 @@ public class Map : ScriptableObject
     [SerializeField] private Color playerColor;
     [SerializeField] private Color pelletColor;
     [SerializeField] private Color powerPelletColor;
+    [SerializeField] private Color ghostHouseColor;
 
     [Header("Ghost Colors")]
     [SerializeField, Tooltip("Color of Blinky")] private Color redGhostColor;
@@ -56,13 +60,18 @@ public class Map : ScriptableObject
     private List<Vector2Int> pelletPositions = new List<Vector2Int>();
     private List<Vector2Int> powerPelletPositions = new List<Vector2Int>();
 
+    // Ghost house
+    private List<Vector2Int> ghostHousePositions = new List<Vector2Int>();
+
     // Ghost positions
     private List<Vector2Int> redGhostPositions = new List<Vector2Int>();
     private List<Vector2Int> cyanGhostPositions = new List<Vector2Int>();
     private List<Vector2Int> pinkGhostPositions = new List<Vector2Int>();
     private List<Vector2Int> orangeGhostPositions = new List<Vector2Int>();
     private Vector2Int playerPosition;
-    
+
+    #endregion
+
     [Button]
     public void LoadMap()
     {
@@ -70,6 +79,8 @@ public class Map : ScriptableObject
         LoadMapTexture();
         CreateMap();
     }
+
+    #region Texture Loading
 
     private void LoadMapTexture()
     {
@@ -117,9 +128,15 @@ public class Map : ScriptableObject
             pinkGhostPositions.Add(pos);
         else if (col == orangeGhostColor)
             orangeGhostPositions.Add(pos);
+        else if (col == ghostHouseColor)
+            ghostHousePositions.Add(pos);
         else if (col == playerColor)
             playerPosition = pos;
     }
+
+    #endregion
+
+    #region Create Map
 
     private void CreateMap()
     {
@@ -130,10 +147,11 @@ public class Map : ScriptableObject
         CreatePortals(map.transform);
         CreateMiniMap(map.transform);
         CreateGhosts(map.transform);
+        CreateGhostHouse(map.transform);
         CreateIntersections(map.transform);
 
         // Create Player
-        CreatePrefab(map.transform, playerPrefab, playerPosition, "Pacman Player");
+        CreatePrefab(map.transform, playerPrefab, playerPosition, "Pacman Player", false);
     }
 
     private void CreateWalls(Transform parentTransform)
@@ -269,30 +287,6 @@ public class Map : ScriptableObject
         CreatePrefabWithHierarchy(ghostHolder.transform, "Orange Ghosts (Clyde)", orangeGhost, orangeGhostPositions, "Clyde", false);
     }
 
-    private void CreatePrefabWithHierarchy(Transform parentTransform, string holderObjectName, GameObject prefab, List<Vector2Int> positions, string childObjectName, bool addOffset = true, bool isStatic = false)
-    {
-        GameObject holder = new GameObject(holderObjectName);
-        holder.transform.parent = parentTransform;
-        CreatePrefabs(holder.transform, prefab, positions, childObjectName, addOffset);
-
-        if(isStatic)
-            MakeStatic(holder.transform);
-    }
-
-    private void CreatePrefabs(Transform prefabHolder, GameObject prefab, List<Vector2Int> pos, string name, bool addOffset = true)
-    {
-        for (int i = 0; i < pos.Count; i++)
-        {
-            CreatePrefab(prefabHolder, prefab, pos[i], $"{name} {i}", addOffset);
-        }
-    }
-
-    private void CreatePrefab(Transform prefabHolder, GameObject prefab, Vector2Int pos, string name, bool addOffset = true)
-    {
-        GameObject pelletGO = Instantiate(prefab, IndexToPosition(pos) - (addOffset ? Vector3.up * tileSize / 4f : Vector3.zero), Quaternion.identity, prefabHolder);
-        pelletGO.name = name;
-    }
-
     private void CreateMiniMap(Transform parentTransform)
     {
         GameObject miniMapHolder = new GameObject("Mini Map");
@@ -327,6 +321,36 @@ public class Map : ScriptableObject
 
         CreatePrefabWithHierarchy(parentTransform, "Intersections", intersection, intersectionPositions, "Intersection", false, true);
     }
+
+    private void CreateGhostHouse(Transform parentTransform) => CreatePrefabWithHierarchy(parentTransform, "Ghost Houses", ghostHouse, ghostHousePositions, "Ghost House", false, true);
+
+    private void CreatePrefabWithHierarchy(Transform parentTransform, string holderObjectName, GameObject prefab, List<Vector2Int> positions, string childObjectName, bool addOffset = true, bool isStatic = false)
+    {
+        GameObject holder = new GameObject(holderObjectName);
+        holder.transform.parent = parentTransform;
+        CreatePrefabs(holder.transform, prefab, positions, childObjectName, addOffset);
+
+        if(isStatic)
+            MakeStatic(holder.transform);
+    }
+
+    private void CreatePrefabs(Transform prefabHolder, GameObject prefab, List<Vector2Int> pos, string name, bool addOffset = true)
+    {
+        for (int i = 0; i < pos.Count; i++)
+        {
+            CreatePrefab(prefabHolder, prefab, pos[i], $"{name} {i}", addOffset);
+        }
+    }
+
+    private void CreatePrefab(Transform prefabHolder, GameObject prefab, Vector2Int pos, string name, bool addOffset = true)
+    {
+        GameObject pelletGO = Instantiate(prefab, IndexToPosition(pos) - (addOffset ? Vector3.up * tileSize / 4f : Vector3.zero), Quaternion.identity, prefabHolder);
+        pelletGO.name = name;
+    }
+
+    #endregion
+
+    #region Util Methods
 
     private bool IsIntersection(int x, int y)
     {
@@ -418,4 +442,8 @@ public class Map : ScriptableObject
         foreach (Transform child in tr.transform)
             MakeStatic(child);
     }
+
+    public static Vector2Int GetRandomGhostHousePosition() => current.ghostHousePositions[Random.Range(0, current.ghostHousePositions.Count)];
+
+    #endregion
 }

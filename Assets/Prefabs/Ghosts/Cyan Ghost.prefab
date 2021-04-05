@@ -34,6 +34,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2244798400267142096, guid: 68be6d0205bf8774e8da4d4c5ef670cf,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: bde29df2db971374480e4481e92b2a47, type: 2}
     - target: {fileID: 4749858594198132934, guid: 68be6d0205bf8774e8da4d4c5ef670cf,
         type: 3}
       propertyPath: m_RootOrder
@@ -94,6 +99,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cyan Ghost
       objectReference: {fileID: 0}
+    - target: {fileID: 5586875310183274196, guid: 68be6d0205bf8774e8da4d4c5ef670cf,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: bde29df2db971374480e4481e92b2a47, type: 2}
     - target: {fileID: 8224739600198560634, guid: 68be6d0205bf8774e8da4d4c5ef670cf,
         type: 3}
       propertyPath: m_Materials.Array.data[0]

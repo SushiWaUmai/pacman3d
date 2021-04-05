@@ -29,6 +29,8 @@ MonoBehaviour:
   portal: {fileID: 5444025815372702927, guid: d58dccd029e177b4ba83ebf03273ba4f, type: 3}
   intersection: {fileID: 7310510660013674188, guid: 22686a40a1006044f8cf2dc30490e764,
     type: 3}
+  ghostHouse: {fileID: 7310510660013674188, guid: 4b6d384b64ab37f44a21adbf48e308c4,
+    type: 3}
   redGhost: {fileID: 6281771722408377891, guid: 299d6e533bf0ba54cabee02bed5eb6e5,
     type: 3}
   cyanGhost: {fileID: 6281771722408377891, guid: f63bf27bee1f68248970b484a4b7f51e,
@@ -42,6 +44,7 @@ MonoBehaviour:
   playerColor: {r: 1, g: 1, b: 0, a: 1}
   pelletColor: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
   powerPelletColor: {r: 0.5019608, g: 0.2509804, b: 0, a: 1}
+  ghostHouseColor: {r: 0, g: 0, b: 1, a: 1}
   redGhostColor: {r: 1, g: 0, b: 0, a: 1}
   cyanGhostColor: {r: 0, g: 1, b: 1, a: 1}
   pinkGhostColor: {r: 1, g: 0, b: 1, a: 1}
