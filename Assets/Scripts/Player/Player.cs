@@ -9,7 +9,6 @@ public class Player : MonoBehaviour
 {
     [SerializeField] private GameEvent OnPowerPalletCollect;
     [SerializeField] private GameEvent OnPowerPalletEnd;
-    [SerializeField] private GameEvent OnPlayerDie;
     [SerializeField] private float powerPalletTime;
     [ShowNonSerializedField] private bool canKillGhost;
 
@@ -18,13 +17,32 @@ public class Player : MonoBehaviour
     [SerializeField] private LayerMask ghostLayer;
     [SerializeField] private float maxDistance = 10;
 
+    [Header("Respawning")]
+    [SerializeField] private IntGameEvent OnPlayerDie;
+    [SerializeField] private float glitchoutTime;
+    [SerializeField] private FloatVariable resetAnimationTime;
+    [SerializeField] private BoolVariable isRespawning;
+    [SerializeField] private IntVariable livesLeft;
+
     private Timer powerPelletTimer;
 
     private void Start()
     {
         OnPowerPalletCollect.AddListener(PowerPelletCollect);
         OnPowerPalletEnd.AddListener(PowerPelletEnd);
+        OnPlayerDie.AddListener(OnDie);
+        
         Ghost.ResetKillCount();
+
+        isRespawning.Value = false;
+        livesLeft.Value = 3;
+    }
+
+    private void OnDestroy()
+    {
+        OnPowerPalletCollect.RemoveListener(PowerPelletCollect);
+        OnPowerPalletEnd.RemoveListener(PowerPelletEnd);
+        OnPlayerDie.RemoveListener(OnDie);
     }
 
     private void PowerPelletCollect()
@@ -66,23 +84,32 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.TryGetComponent(out Ghost ghost))
+        if (!isRespawning)
         {
-            if (canKillGhost)
+            if (other.gameObject.TryGetComponent(out Ghost ghost))
             {
-                ghost.Die();
-            }
-            else
-            {
-                Die();
+                if (canKillGhost)
+                {
+                    ghost.Die();
+                }
+                else
+                {
+                    OnPlayerDie.Raise(livesLeft.Value--);
+                }
             }
         }
     }
-    
-    private void Die()
+
+    private void OnDie()
     {
-        OnPlayerDie.Raise();
-        playerPostProcessing.GlitchOut();
-        Time.timeScale = 0;
+        isRespawning.Value = true;
+        if (livesLeft != 0)
+        {
+            this.AttachTimer(glitchoutTime, () =>
+            {
+                playerPostProcessing.ResetPlayer();
+                this.AttachTimer(resetAnimationTime, () => isRespawning.Value = false);
+            }, null, false, true);
+        }
     }
 }

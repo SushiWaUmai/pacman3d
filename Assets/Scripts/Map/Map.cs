@@ -407,10 +407,7 @@ public class Map : ScriptableObject
         return Vector2Int.FloorToInt(new Vector2(position.x, position.z) / current.tileSize);
     }
 
-    public static Vector3 IndexToPosition(Vector2Int index)
-    {
-        return new Vector3(index.x, 0, index.y) * current.tileSize + Vector3.one * current.tileSize / 2f;
-    }
+    public static Vector3 IndexToPosition(Vector2Int index) => new Vector3(index.x, 0, index.y) * current.tileSize + Vector3.one * current.tileSize / 2f;
 
     public static List<Vector2Int> FindValidDirections(Vector2Int gridPosition)
     {

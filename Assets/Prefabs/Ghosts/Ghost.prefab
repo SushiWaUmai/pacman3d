@@ -123,6 +123,7 @@ GameObject:
   - component: {fileID: 8859914954155145056}
   - component: {fileID: 8910812834912167033}
   - component: {fileID: 1795991164669526183}
+  - component: {fileID: 6431261559409083701}
   m_Layer: 10
   m_Name: Ghost
   m_TagString: Untagged
@@ -158,6 +159,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   totalScore: {fileID: 11400000, guid: dec92e44a508ffe459b24222b4f6ea7a, type: 2}
+  killScore: 200
 --- !u!54 &8910812834912167033
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -187,6 +189,34 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6431261559409083701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5377636146613600892}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a76efbf330b5b274caae0b5104972d66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  graphicsObject: {fileID: 2579396220879344349}
+  dir: {x: 0, y: 0, z: 0}
+  entityRotation: 0
+  speed: 5
+  OnPlayerDie: {fileID: 11400000, guid: 0aded1acfba13804e849deb7906ed0e2, type: 2}
+  isRespawning: {fileID: 11400000, guid: dfc6c846d100bc74085cc39cb0fa9c5c, type: 2}
+  current: 0
+  OnPowerPelletCollect: {fileID: 11400000, guid: eec55e1d54dcd4c499fc150e74dd359f,
+    type: 2}
+  OnPowerPelletEnd: {fileID: 11400000, guid: eec55e1d54dcd4c499fc150e74dd359f, type: 2}
+  minTileDistance: 0.1
+  modeChangeIntervall: 10
+  scatterConvergenceSpeed: 0.5
+  scatterProbability: 1
+  targetTile: {x: 0, y: 0}
+  scatterTimeIntervall: 20
 --- !u!1 &8374897778550101738
 GameObject:
   m_ObjectHideFlags: 0
@@ -283,3 +313,4 @@ MonoBehaviour:
   OnPowerPelletCollect: {fileID: 11400000, guid: eec55e1d54dcd4c499fc150e74dd359f,
     type: 2}
   OnPowerPelletEnd: {fileID: 11400000, guid: d5ccdb20462d3b74d8d2f5089dfdf943, type: 2}
+  ghostMvment: {fileID: 0}

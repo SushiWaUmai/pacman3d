@@ -5,7 +5,7 @@ using ScriptableObjectArchitecture;
 using NaughtyAttributes;
 using UnityTimer;
 
-public abstract class GhostMovement : Movement
+public class GhostMovement : Movement
 {
     public enum MovementMode
     {
@@ -30,6 +30,8 @@ public abstract class GhostMovement : Movement
     [SerializeField] protected Vector2 targetTile;
     [SerializeField] private float scatterTimeIntervall = 20;
 
+    private GhostTargeting ghostTargeting;
+
     public event System.Action OnGhostEaten;
     public event System.Action OnGhostRecover;
 
@@ -42,22 +44,33 @@ public abstract class GhostMovement : Movement
         this.AttachTimer(modeChangeIntervall, () => SwitchGhostMode(), null, true);
         OnPowerPelletCollect.AddListener(StartFrightenedMode);
         OnPowerPelletEnd.AddListener(EndFrightenedMode);
+        ghostTargeting = GetComponent<GhostTargeting>();
+    }
+
+    protected override void Destruct()
+    {
+        base.Destruct();
+        OnPowerPelletCollect.RemoveListener(StartFrightenedMode);
+        OnPowerPelletEnd.RemoveListener(EndFrightenedMode);
     }
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.CompareTag("Intersection"))
+        if (!isRespawning.Value)
         {
-            if (!isInIntersection && (transform.position - other.gameObject.transform.position).sqrMagnitude < minTileDistance * minTileDistance)
+            if (other.gameObject.CompareTag("Intersection"))
             {
-                transform.position = other.transform.position;
-                InIntersection();
-                isInIntersection = true;
+                if (!isInIntersection && (transform.position - other.gameObject.transform.position).sqrMagnitude < minTileDistance * minTileDistance)
+                {
+                    transform.position = other.transform.position;
+                    InIntersection();
+                    isInIntersection = true;
+                }
             }
-        }
-        else if(other.gameObject.CompareTag("GhostHouse"))
-        {
-            InGhostHouse();
+            else if(other.gameObject.CompareTag("GhostHouse"))
+            {
+                InGhostHouse();
+            }
         }
     }
 
@@ -80,7 +93,7 @@ public abstract class GhostMovement : Movement
         switch (current)
         {
             case MovementMode.Chase:
-                UpateChaseTargetTile(gridPosition);
+                UpdateTargetTile(gridPosition);
                 ShortestPathMovement(gridPosition, validDirections);
                 break;
             case MovementMode.Scatter:
@@ -111,22 +124,27 @@ public abstract class GhostMovement : Movement
 
     #region Movement
 
-    protected virtual void ShortestPathMovement(Vector2Int position, List<Vector2Int> validDirections)
+    private void ShortestPathMovement(Vector2Int position, List<Vector2Int> validDirections)
     {
         Vector2Int bestDir = ShortestPath(validDirections, position, targetTile);
         ApplyDirection(bestDir);
     }
 
-    protected virtual void FrightenedMovement(List<Vector2Int> validDirections)
+    private void FrightenedMovement(List<Vector2Int> validDirections)
     {
         Vector2Int selectedDir = validDirections[Random.Range(0, validDirections.Count)];
         ApplyDirection(selectedDir);
     }
 
-    // Calculates and applies the direction
-    protected abstract void UpateChaseTargetTile(Vector2Int position);
+    private void UpdateTargetTile(Vector2Int position)
+    {
+        Vector2? target = ghostTargeting.GetTargetTile(position);
 
-    protected Vector2Int ShortestPath(List<Vector2Int> directions, Vector2Int pos, Vector2 to)
+        if (target != null)
+            targetTile = (Vector2)target;
+    }
+
+    private Vector2Int ShortestPath(List<Vector2Int> directions, Vector2Int pos, Vector2 to)
     {
         float minSqrDistance = float.MaxValue;
         int index = -1;
@@ -145,7 +163,7 @@ public abstract class GhostMovement : Movement
         return directions[index];
     }
 
-    protected void ApplyDirection(Vector2Int direction) => dir = new Vector3(direction.x, 0, direction.y);
+    private void ApplyDirection(Vector2Int direction) => dir = new Vector3(direction.x, 0, direction.y);
 
     private void InvertDirection()
     {
@@ -165,7 +183,8 @@ public abstract class GhostMovement : Movement
 
     private void OnDrawGizmos()
     {
-        Gizmos.DrawLine(transform.position, Map.IndexToPosition(Vector2Int.RoundToInt(targetTile)));
+        if(ghostTargeting)
+            Gizmos.DrawLine(transform.position, Map.IndexToPosition(Vector2Int.RoundToInt(targetTile)));
     }
 
     #endregion

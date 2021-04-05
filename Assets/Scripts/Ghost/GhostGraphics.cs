@@ -34,6 +34,12 @@ public class GhostGraphics : MonoBehaviour
         ghostMvment.OnGhostRecover += GhostRecover;
     }
 
+    private void OnDestroy()
+    {
+        ghostMvment.OnGhostEaten -= GhostEaten;
+        ghostMvment.OnGhostRecover -= GhostRecover;
+    }
+
     private void PowerPelletStart()
     {
         ghostRenderer.sharedMaterial = FrightenedMaterial;

@@ -9,9 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ea29b4887d65ef45a35c9c5add9005e, type: 3}
-  m_Name: OnPlayerDie
+  m_Script: {fileID: 11500000, guid: ef266e8e45074464095e3ad82a059902, type: 3}
+  m_Name: UI
   m_EditorClassIdentifier: 
-  DeveloperDescription:
-    _value: 
-  _debugValue: 0
+  sceneToLoad: UI
+  loadMode: 1
+  hasLoadingScreen: 0
+  loadingScreen: {fileID: 0}
+  dontDestroyOnLoad: 0
+  loadingScreenLifeTime: 0
+  fixedLoadingTime: 0
+  loadTime: 0

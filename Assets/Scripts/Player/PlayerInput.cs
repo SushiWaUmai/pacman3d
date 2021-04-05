@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using ScriptableObjectArchitecture;
 
 [RequireComponent(typeof(PlayerMovement))]
 [RequireComponent(typeof(CameraMovement))]
@@ -9,6 +10,7 @@ public class PlayerInput : MonoBehaviour
     private PlayerMovement plMovement;
     private CameraMovement camMovement;
     [SerializeField] private float mouseSensitivity;
+    [SerializeField] private BoolVariable isRespawning;
 
     private void Start()
     {
@@ -18,8 +20,11 @@ public class PlayerInput : MonoBehaviour
 
     private void Update()
     {
-        MoveInput();
-        LookInput();
+        if (!isRespawning.Value)
+        {
+            MoveInput();
+            LookInput();
+        }
     }
 
     private void MoveInput()

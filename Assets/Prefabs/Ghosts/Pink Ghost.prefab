@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &8947775207510550104
+--- !u!114 &4773685726081014737
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,23 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 6281771722408377891}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bfe237f068353d44a868fc106f2a525a, type: 3}
+  m_Script: {fileID: 11500000, guid: 7a9fc28ceb4a1154da4cc31b0f6ff553, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  graphicsObject: {fileID: 4487765278703578754}
-  dir: {x: 0, y: 0, z: 0}
-  entityRotation: 0
-  speed: 5
-  current: 0
-  OnPowerPelletCollect: {fileID: 11400000, guid: eec55e1d54dcd4c499fc150e74dd359f,
-    type: 2}
-  OnPowerPelletEnd: {fileID: 11400000, guid: d5ccdb20462d3b74d8d2f5089dfdf943, type: 2}
-  minTileDistance: 0.1
-  modeChangeIntervall: 10
-  scatterConvergenceSpeed: 0.5
-  scatterProbability: 1
-  scatterTargetTile: {x: 0, y: 0}
-  scatterTimeIntervall: 20
   predictionTiles: 4
 --- !u!1001 &2129188376615255135
 PrefabInstance:
@@ -109,12 +95,6 @@ PrefabInstance:
 --- !u!1 &6281771722408377891 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5377636146613600892, guid: 68be6d0205bf8774e8da4d4c5ef670cf,
-    type: 3}
-  m_PrefabInstance: {fileID: 2129188376615255135}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &4487765278703578754 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2579396220879344349, guid: 68be6d0205bf8774e8da4d4c5ef670cf,
     type: 3}
   m_PrefabInstance: {fileID: 2129188376615255135}
   m_PrefabAsset: {fileID: 0}
