@@ -15,7 +15,7 @@ public class Player : MonoBehaviour
 
     [Header("Post Processing")]
     [SerializeField] private LayerMask ghostLayer;
-    [SerializeField] private float minDistance;
+    [SerializeField] private float maxDistance;
     private PlayerPostProcessing playerPostProcessing;
 
     private void Start()
@@ -38,15 +38,19 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Collider[] ghosts = Physics.OverlapSphere(transform.position, minDistance, ghostLayer);
+        Collider[] ghosts = Physics.OverlapSphere(transform.position, maxDistance, ghostLayer);
 
-        float closestGhostSqrDistance;
+        float closestGhostSqrDistance = float.MaxValue;
         foreach (Collider c in ghosts)
         {
-            
+            float sqrMag = (c.transform.position - transform.position).sqrMagnitude;
+            if (sqrMag < closestGhostSqrDistance)
+                closestGhostSqrDistance = sqrMag;
         }
+        float dist = Mathf.Sqrt(closestGhostSqrDistance);
+        float val = Mathf.Clamp01(closestGhostSqrDistance / maxDistance);
 
-        //playerPostProcessing.SetGlitchIntensity();
+        playerPostProcessing.SetGlitchIntensity(val);
     }
 
     private void OnTriggerEnter(Collider other)
