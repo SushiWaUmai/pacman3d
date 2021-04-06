@@ -15,19 +15,34 @@ public class PlayerPostProcessing : MonoBehaviour
     [SerializeField] private FloatVariable respawnAnimationTime;
     [SerializeField] private IntGameEvent OnPlayerDie;
     [SerializeField] private BoolVariable isRespawning;
+    [SerializeField] private GameEvent OnGameClear;
 
     private DigitalGlitch digitalGlitch;
     private AnalogGlitch analogGlitch;
+    private ShockWave shockWave;
 
     private void Start()
     {
         PostProcessVolume vol = GetComponent<PostProcessVolume>();
         vol.profile.TryGetSettings(out digitalGlitch);
         vol.profile.TryGetSettings(out analogGlitch);
+        vol.profile.TryGetSettings(out shockWave);
 
         SetGlitchIntensity(0);
 
         OnPlayerDie.AddListener(GlitchOut);
+        OnGameClear.AddListener(CreateShockWave);
+    }
+
+    private void OnDestroy()
+    {
+        OnPlayerDie.RemoveListener(GlitchOut);
+        OnGameClear.RemoveListener(CreateShockWave);
+    }
+
+    private void CreateShockWave()
+    {
+        shockWave.CreateShockWave();
     }
 
     public void SetGlitchIntensity(float glitchValue)

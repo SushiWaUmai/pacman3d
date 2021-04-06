@@ -5163,6 +5163,8 @@ MonoBehaviour:
       PublicKeyToken=null
   - assemblyQualifiedName: Technicolor, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
+  - assemblyQualifiedName: ShockWave, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
   m_AfterStackBundles:
   - assemblyQualifiedName: EdgeDetect_AfterStack, AGM.EdgeDetection, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
@@ -5217,6 +5219,7 @@ MonoBehaviour:
     type: 2}
   OnPlayerDie: {fileID: 11400000, guid: 0aded1acfba13804e849deb7906ed0e2, type: 2}
   isRespawning: {fileID: 11400000, guid: dfc6c846d100bc74085cc39cb0fa9c5c, type: 2}
+  OnGameClear: {fileID: 11400000, guid: 07a244f13904c34488aec23282344a9c, type: 2}
 --- !u!114 &7157346892096911806
 MonoBehaviour:
   m_ObjectHideFlags: 0

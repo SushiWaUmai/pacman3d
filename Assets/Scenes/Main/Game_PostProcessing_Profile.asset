@@ -1496,6 +1496,35 @@ MonoBehaviour:
   - {fileID: 7870408580363950056}
   - {fileID: -7508891684725852448}
   - {fileID: -991755491275900400}
+  - {fileID: 411234806021757125}
+--- !u!114 &411234806021757125
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd9abd9403bf55d4d8d964bb02e194bb, type: 3}
+  m_Name: ShockWave
+  m_EditorClassIdentifier: 
+  active: 1
+  enabled:
+    overrideState: 1
+    value: 0
+  focalPoint:
+    overrideState: 1
+    value: {x: 0.5, y: 0.5}
+  size:
+    overrideState: 1
+    value: 2
+  magnification:
+    overrideState: 1
+    value: 2
+  speed:
+    overrideState: 1
+    value: 2
 --- !u!114 &1913894804401366845
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -1539,6 +1568,34 @@ MonoBehaviour:
     defaultState: 1
   opacity:
     overrideState: 0
+    value: 1
+--- !u!114 &3641641776791407634
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd9abd9403bf55d4d8d964bb02e194bb, type: 3}
+  m_Name: ShockWave
+  m_EditorClassIdentifier: 
+  active: 1
+  enabled:
+    overrideState: 1
+    value: 1
+  focalPoint:
+    overrideState: 1
+    value: {x: 0, y: 0}
+  size:
+    overrideState: 1
+    value: 0.1
+  magnification:
+    overrideState: 0
+    value: 1
+  speed:
+    overrideState: 1
     value: 1
 --- !u!114 &6001737628170624661
 MonoBehaviour:
