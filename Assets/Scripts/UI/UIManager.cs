@@ -9,6 +9,7 @@ public class UIManager : MonoBehaviour
 {
     [SerializeField] private IntVariable totalScore;
     [SerializeField] private IntVariable pacmanLives;
+    [SerializeField] private GameEvent OnGameClear;
 
     [Header("UI Elements")]
     [SerializeField] private TextMeshProUGUI totalScoreDisplay;
@@ -25,7 +26,16 @@ public class UIManager : MonoBehaviour
         SetupLives();
         pacmanLives.AddListener(UpdateLives);
 
+        OnGameClear.AddListener(GameClear);
+
         SetCursor(false);
+    }
+
+    private void OnDestroy()
+    {
+        totalScore.RemoveListener(UpdateScore);
+        pacmanLives.RemoveListener(UpdateLives);
+        OnGameClear.RemoveListener(GameClear);
     }
 
     private void SetupLives()
@@ -68,7 +78,6 @@ public class UIManager : MonoBehaviour
 
     private void GameOver()
     {
-        //Debug.Log("Game Over");
         InGameUI.SetActive(false);
         gameOverAnimation.gameObject.SetActive(true);
         gameOverAnimation.SetTrigger("Shutdown");
@@ -77,6 +86,11 @@ public class UIManager : MonoBehaviour
 
         totalScore.RemoveListener(UpdateScore);
         pacmanLives.RemoveListener(UpdateLives);
+    }
+
+    private void GameClear()
+    {
+
     }
 
     private void SetCursor(bool set)

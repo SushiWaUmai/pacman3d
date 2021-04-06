@@ -20,12 +20,12 @@ public class ShockWave : PostProcessEffectSettings
     public FloatParameter speed = new FloatParameter { value = 2 };
 
     private float shockwaveStart = 0;
-    public float ShaderTime => Time.time - shockwaveStart;
+    public float ShaderTime => Time.timeSinceLevelLoad - shockwaveStart;
 
     public void CreateShockWave()
     {
         enabled.value = true;
-        shockwaveStart = Time.time;
+        shockwaveStart = Time.timeSinceLevelLoad;
         Timer.Register(1 / speed, ResetTime);
     }
 

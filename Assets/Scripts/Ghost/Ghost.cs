@@ -9,6 +9,8 @@ public class Ghost : MonoBehaviour
     [SerializeField] private IntVariable totalScore;
     private bool isDead;
 
+    public bool IsEaten => ghostmvment.IsEaten;
+
     [Header("Scoring")]
     [SerializeField] private int killScore = 200;
     private static int killedGhost;
@@ -28,7 +30,6 @@ public class Ghost : MonoBehaviour
             killedGhost++;
             totalScore.Value += (int)Mathf.Pow(killScore / 100, killedGhost) * 100;
             ghostmvment.GetEaten();
-            //Debug.Log($"Ghost {gameObject.name} Died");
 
             isDead = true;
         }

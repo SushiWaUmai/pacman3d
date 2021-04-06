@@ -13,7 +13,8 @@ public class Movement : PortalTraveller
     private Rigidbody rb;
 
     [SerializeField] private IntGameEvent OnPlayerDie;
-    [SerializeField] protected BoolVariable isRespawning;
+    [SerializeField] protected BoolVariable canInteract;
+    [SerializeField] private GameEvent OnGameClear;
     private Vector3 origPosition;
     private float origRotation;
 
@@ -26,6 +27,7 @@ public class Movement : PortalTraveller
         origPosition = transform.position;
         origRotation = entityRotation;
         OnPlayerDie.AddListener(ResetPosition);
+        OnGameClear.AddListener(StopMovement);
     }
 
     private void OnDestroy() => Destruct();
@@ -33,11 +35,12 @@ public class Movement : PortalTraveller
     protected virtual void Destruct()
     {
         OnPlayerDie.RemoveListener(ResetPosition);
+        OnGameClear.RemoveListener(StopMovement);
     }
 
     protected void MovementUpdate()
     {
-        if (!isRespawning.Value)
+        if (canInteract.Value)
         {
             rb.velocity = dir * speed;
             transform.rotation = Quaternion.AngleAxis(entityRotation, Vector2.up);
@@ -48,6 +51,11 @@ public class Movement : PortalTraveller
     {
         transform.position = origPosition;
         entityRotation = origRotation;
+        StopMovement();
+    }
+
+    private void StopMovement()
+    {
         rb.velocity = Vector3.zero;
     }
 }

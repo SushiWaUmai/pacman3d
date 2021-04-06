@@ -7,19 +7,33 @@ using UnityTimer;
 
 public class PlayerPostProcessing : MonoBehaviour
 {
+    [Header("Glitch")]
     [SerializeField] private float digitalGlitchIntensity = 1;
     [SerializeField] private float scanLineJitterIntensity = 1;
     [SerializeField] private float horizontalShakeIntensity = 1;
     [SerializeField] private float colorDriftIntensity = 1;
 
+    [Header("White Balance")]
+    [SerializeField] private float normalWhiteBalance;
+    [SerializeField] private float powerPelletWhiteBalance;
+
+    [Header("Chromatic Aberration")]
+    [SerializeField] private float normalChromaticAberrationIntensity;
+    [SerializeField] private float powerPelletChromaticAberrationIntensity;
+
+    [Header("Scriptable Objects")]
+    [SerializeField] private GameEvent OnPowerPelletCollect;
+    [SerializeField] private GameEvent OnPowerPelletEnd;
     [SerializeField] private FloatVariable respawnAnimationTime;
     [SerializeField] private IntGameEvent OnPlayerDie;
-    [SerializeField] private BoolVariable isRespawning;
+    [SerializeField] private BoolVariable canInteract;
     [SerializeField] private GameEvent OnGameClear;
 
     private DigitalGlitch digitalGlitch;
     private AnalogGlitch analogGlitch;
     private ShockWave shockWave;
+    private ColorGrading colorGrading;
+    private ChromaticAberration chromaticAberration;
 
     private void Start()
     {
@@ -27,27 +41,35 @@ public class PlayerPostProcessing : MonoBehaviour
         vol.profile.TryGetSettings(out digitalGlitch);
         vol.profile.TryGetSettings(out analogGlitch);
         vol.profile.TryGetSettings(out shockWave);
+        vol.profile.TryGetSettings(out colorGrading);
+        vol.profile.TryGetSettings(out chromaticAberration);
 
         SetGlitchIntensity(0);
 
         OnPlayerDie.AddListener(GlitchOut);
         OnGameClear.AddListener(CreateShockWave);
+
+        OnPowerPelletCollect.AddListener(PowerPelletStart);
+        OnPowerPelletEnd.AddListener(PowerPelletEnd);
     }
 
     private void OnDestroy()
     {
         OnPlayerDie.RemoveListener(GlitchOut);
         OnGameClear.RemoveListener(CreateShockWave);
+
+        OnPowerPelletCollect.RemoveListener(PowerPelletStart);
+        OnPowerPelletEnd.RemoveListener(PowerPelletEnd);
     }
 
-    private void CreateShockWave()
+    public void CreateShockWave()
     {
         shockWave.CreateShockWave();
     }
 
     public void SetGlitchIntensity(float glitchValue)
     {
-        if (!isRespawning.Value)
+        if (canInteract.Value)
         {
             digitalGlitch.intensity.value = Mathf.Lerp(0, digitalGlitchIntensity, glitchValue);
             analogGlitch.scanLineJitter.value = Mathf.Lerp(0, scanLineJitterIntensity, glitchValue);
@@ -75,5 +97,17 @@ public class PlayerPostProcessing : MonoBehaviour
         analogGlitch.scanLineJitter.value = 1;
         analogGlitch.horizontalShake.value = 1;
         analogGlitch.colorDrift.value = 1;
+    }
+
+    private void PowerPelletStart()
+    {
+        colorGrading.temperature.value = powerPelletWhiteBalance;
+        chromaticAberration.intensity.value = powerPelletChromaticAberrationIntensity;
+    }
+
+    private void PowerPelletEnd()
+    {
+        colorGrading.temperature.value = normalWhiteBalance;
+        chromaticAberration.intensity.value = normalChromaticAberrationIntensity;
     }
 }

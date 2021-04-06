@@ -1610,6 +1610,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   totalScore: {fileID: 11400000, guid: dec92e44a508ffe459b24222b4f6ea7a, type: 2}
   pacmanLives: {fileID: 11400000, guid: 8e087510ca941204bb6293af36d8421d, type: 2}
+  OnGameClear: {fileID: 11400000, guid: 07a244f13904c34488aec23282344a9c, type: 2}
   totalScoreDisplay: {fileID: 2100345858}
   pacmanLifeIcon: {fileID: 21300000, guid: da1f9e0640a648345a681c5c181dc234, type: 3}
   InGameUI: {fileID: 301996874}

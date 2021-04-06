@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
 {
     [SerializeField] private GameEvent OnPowerPalletCollect;
     [SerializeField] private GameEvent OnPowerPalletEnd;
+    [SerializeField] private GameEvent OnGameClear;
     [SerializeField] private float powerPalletTime;
     [ShowNonSerializedField] private bool canKillGhost;
 
@@ -21,8 +22,12 @@ public class Player : MonoBehaviour
     [SerializeField] private IntGameEvent OnPlayerDie;
     [SerializeField] private float glitchoutTime;
     [SerializeField] private FloatVariable resetAnimationTime;
-    [SerializeField] private BoolVariable isRespawning;
+    [SerializeField] private BoolVariable canInteract;
     [SerializeField] private IntVariable livesLeft;
+
+    [Header("Ghost Kill")]
+    [SerializeField] private float slomoSpeed = 0.2f;
+    [SerializeField] private float slomoDuration = 0.5f;
 
     private Timer powerPelletTimer;
 
@@ -31,10 +36,11 @@ public class Player : MonoBehaviour
         OnPowerPalletCollect.AddListener(PowerPelletCollect);
         OnPowerPalletEnd.AddListener(PowerPelletEnd);
         OnPlayerDie.AddListener(OnDie);
-        
+        OnGameClear.AddListener(GameClear);
+
         Ghost.ResetKillCount();
 
-        isRespawning.Value = false;
+        canInteract.Value = true;
         livesLeft.Value = 3;
     }
 
@@ -43,6 +49,7 @@ public class Player : MonoBehaviour
         OnPowerPalletCollect.RemoveListener(PowerPelletCollect);
         OnPowerPalletEnd.RemoveListener(PowerPelletEnd);
         OnPlayerDie.RemoveListener(OnDie);
+        OnGameClear.RemoveListener(GameClear);
     }
 
     private void PowerPelletCollect()
@@ -60,6 +67,11 @@ public class Player : MonoBehaviour
     private void PowerPelletEnd()
     {
         canKillGhost = false;
+    }
+
+    private void GameClear()
+    {
+        canInteract.Value = false;
     }
 
     private void FixedUpdate()
@@ -84,17 +96,24 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!isRespawning)
+        if (canInteract)
         {
             if (other.gameObject.TryGetComponent(out Ghost ghost))
             {
-                if (canKillGhost)
+                if (!ghost.IsEaten)
                 {
-                    ghost.Die();
-                }
-                else
-                {
-                    OnPlayerDie.Raise(livesLeft.Value--);
+                    if (canKillGhost)
+                    {
+                        playerPostProcessing.CreateShockWave();
+                        ghost.Die();
+
+                        SlomoManager.SetTimeScale(slomoSpeed);
+                        this.AttachTimer(slomoDuration, () => SlomoManager.SetTimeScale(1), null, false, true);
+                    }
+                    else
+                    {
+                        OnPlayerDie.Raise(livesLeft.Value--);
+                    }
                 }
             }
         }
@@ -102,13 +121,13 @@ public class Player : MonoBehaviour
 
     private void OnDie()
     {
-        isRespawning.Value = true;
+        canInteract.Value = false;
         if (livesLeft != 0)
         {
             this.AttachTimer(glitchoutTime, () =>
             {
                 playerPostProcessing.ResetPlayer();
-                this.AttachTimer(resetAnimationTime, () => isRespawning.Value = false);
+                this.AttachTimer(resetAnimationTime, () => canInteract.Value = true);
             }, null, false, true);
         }
     }

@@ -206,7 +206,8 @@ MonoBehaviour:
   entityRotation: 0
   speed: 7.5
   OnPlayerDie: {fileID: 11400000, guid: 0aded1acfba13804e849deb7906ed0e2, type: 2}
-  isRespawning: {fileID: 11400000, guid: dfc6c846d100bc74085cc39cb0fa9c5c, type: 2}
+  canInteract: {fileID: 11400000, guid: dfc6c846d100bc74085cc39cb0fa9c5c, type: 2}
+  OnGameClear: {fileID: 11400000, guid: 07a244f13904c34488aec23282344a9c, type: 2}
   current: 0
   OnPowerPelletCollect: {fileID: 11400000, guid: eec55e1d54dcd4c499fc150e74dd359f,
     type: 2}

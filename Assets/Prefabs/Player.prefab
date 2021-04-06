@@ -5215,10 +5215,17 @@ MonoBehaviour:
   scanLineJitterIntensity: 0.5
   horizontalShakeIntensity: 0.5
   colorDriftIntensity: 0.5
+  normalWhiteBalance: -50
+  powerPelletWhiteBalance: 50
+  normalChromaticAberrationIntensity: 0.2
+  powerPelletChromaticAberrationIntensity: 1
+  OnPowerPelletCollect: {fileID: 11400000, guid: eec55e1d54dcd4c499fc150e74dd359f,
+    type: 2}
+  OnPowerPelletEnd: {fileID: 11400000, guid: d5ccdb20462d3b74d8d2f5089dfdf943, type: 2}
   respawnAnimationTime: {fileID: 11400000, guid: 24dca7e5c51295e4e998add77270414c,
     type: 2}
   OnPlayerDie: {fileID: 11400000, guid: 0aded1acfba13804e849deb7906ed0e2, type: 2}
-  isRespawning: {fileID: 11400000, guid: dfc6c846d100bc74085cc39cb0fa9c5c, type: 2}
+  canInteract: {fileID: 11400000, guid: dfc6c846d100bc74085cc39cb0fa9c5c, type: 2}
   OnGameClear: {fileID: 11400000, guid: 07a244f13904c34488aec23282344a9c, type: 2}
 --- !u!114 &7157346892096911806
 MonoBehaviour:
@@ -5520,6 +5527,7 @@ MonoBehaviour:
   OnPowerPalletCollect: {fileID: 11400000, guid: eec55e1d54dcd4c499fc150e74dd359f,
     type: 2}
   OnPowerPalletEnd: {fileID: 11400000, guid: d5ccdb20462d3b74d8d2f5089dfdf943, type: 2}
+  OnGameClear: {fileID: 11400000, guid: 07a244f13904c34488aec23282344a9c, type: 2}
   powerPalletTime: 15
   playerPostProcessing: {fileID: 5274772647444581908}
   ghostLayer:
@@ -5529,8 +5537,10 @@ MonoBehaviour:
   OnPlayerDie: {fileID: 11400000, guid: 0aded1acfba13804e849deb7906ed0e2, type: 2}
   glitchoutTime: 1
   resetAnimationTime: {fileID: 11400000, guid: 24dca7e5c51295e4e998add77270414c, type: 2}
-  isRespawning: {fileID: 11400000, guid: dfc6c846d100bc74085cc39cb0fa9c5c, type: 2}
+  canInteract: {fileID: 11400000, guid: dfc6c846d100bc74085cc39cb0fa9c5c, type: 2}
   livesLeft: {fileID: 11400000, guid: 8e087510ca941204bb6293af36d8421d, type: 2}
+  slomoSpeed: 0.2
+  slomoDuration: 0.5
 --- !u!114 &8328815493879869636
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5548,7 +5558,8 @@ MonoBehaviour:
   entityRotation: 0
   speed: 10
   OnPlayerDie: {fileID: 11400000, guid: 0aded1acfba13804e849deb7906ed0e2, type: 2}
-  isRespawning: {fileID: 11400000, guid: dfc6c846d100bc74085cc39cb0fa9c5c, type: 2}
+  canInteract: {fileID: 11400000, guid: dfc6c846d100bc74085cc39cb0fa9c5c, type: 2}
+  OnGameClear: {fileID: 11400000, guid: 07a244f13904c34488aec23282344a9c, type: 2}
   powerPelletSpeed: 15
   OnPowerPelletCollect: {fileID: 11400000, guid: eec55e1d54dcd4c499fc150e74dd359f,
     type: 2}
@@ -5566,4 +5577,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mouseSensitivity: 1
-  isRespawning: {fileID: 11400000, guid: dfc6c846d100bc74085cc39cb0fa9c5c, type: 2}
+  canInteract: {fileID: 11400000, guid: dfc6c846d100bc74085cc39cb0fa9c5c, type: 2}

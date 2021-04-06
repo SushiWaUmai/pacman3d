@@ -30,6 +30,8 @@ public class GhostMovement : Movement
     [SerializeField] protected Vector2 targetTile;
     [SerializeField] private float scatterTimeIntervall = 20;
 
+    public bool IsEaten => current == MovementMode.Eaten;
+
     private GhostTargeting ghostTargeting;
 
     public event System.Action OnGhostEaten;
@@ -56,7 +58,7 @@ public class GhostMovement : Movement
 
     private void OnTriggerStay(Collider other)
     {
-        if (!isRespawning.Value)
+        if (canInteract.Value)
         {
             if (other.gameObject.CompareTag("Intersection"))
             {

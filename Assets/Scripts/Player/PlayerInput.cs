@@ -10,7 +10,7 @@ public class PlayerInput : MonoBehaviour
     private PlayerMovement plMovement;
     private CameraMovement camMovement;
     [SerializeField] private float mouseSensitivity;
-    [SerializeField] private BoolVariable isRespawning;
+    [SerializeField] private BoolVariable canInteract;
 
     private void Start()
     {
@@ -20,7 +20,7 @@ public class PlayerInput : MonoBehaviour
 
     private void Update()
     {
-        if (!isRespawning.Value)
+        if (canInteract.Value)
         {
             MoveInput();
             LookInput();
