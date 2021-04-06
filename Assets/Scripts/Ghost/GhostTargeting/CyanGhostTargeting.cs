@@ -10,6 +10,11 @@ public class CyanGhostTargeting : GhostTargeting
     private void Start()
     {
         RedGhostTargeting[] rgms = FindObjectsOfType<RedGhostTargeting>();
+        if(rgms.Length == 0)
+        {
+            Destroy(gameObject);
+            return;
+        }
         redGhostTransform = rgms[Random.Range(0, rgms.Length)].transform;
     }
 

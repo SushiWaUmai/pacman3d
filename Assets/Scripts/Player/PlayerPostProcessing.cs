@@ -43,15 +43,8 @@ public class PlayerPostProcessing : MonoBehaviour
 
     public void ResetPlayer()
     {
-        //digitalGlitch.intensity.value = 0;
-        //analogGlitch.scanLineJitter.value = 0;
-        //analogGlitch.verticalJump.value = 0;
-        //analogGlitch.horizontalShake.value = 0;
-        //analogGlitch.colorDrift.value = 0;
-
         this.AttachTimer(respawnAnimationTime, null, x =>
         {
-            //Debug.Log($"Respawn in {respawnAnimationTime - x} seconds");
             digitalGlitch.intensity.value = Mathf.Clamp01(Mathf.Lerp(0.9f, 0, x / respawnAnimationTime * 4));
             analogGlitch.scanLineJitter.value = Mathf.Clamp01(Mathf.Lerp(1, 0, x / respawnAnimationTime * 4));
             analogGlitch.horizontalShake.value = Mathf.Clamp01(Mathf.Lerp(1, 0, x / respawnAnimationTime * 4));
