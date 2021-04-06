@@ -19,3 +19,6 @@
 [submodule "Assets/Third_Party_Assets/SEGI"]
 	path = Assets/Third_Party_Assets/SEGI
 	url = https://github.com/sonicether/SEGI.git
+[submodule "Assets/Third_Party_Assets/wakatime-unity"]
+	path = Assets/Third_Party_Assets/wakatime-unity
+	url = https://github.com/codeserk/wakatime-unity
