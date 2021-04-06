@@ -5226,7 +5226,6 @@ MonoBehaviour:
     type: 2}
   OnPlayerDie: {fileID: 11400000, guid: 0aded1acfba13804e849deb7906ed0e2, type: 2}
   canInteract: {fileID: 11400000, guid: dfc6c846d100bc74085cc39cb0fa9c5c, type: 2}
-  OnGameClear: {fileID: 11400000, guid: 07a244f13904c34488aec23282344a9c, type: 2}
 --- !u!114 &7157346892096911806
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5578,3 +5577,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mouseSensitivity: 1
   canInteract: {fileID: 11400000, guid: dfc6c846d100bc74085cc39cb0fa9c5c, type: 2}
+  OnPauseGame: {fileID: 11400000, guid: d22ff15456d781c4f832e628499e7b53, type: 2}

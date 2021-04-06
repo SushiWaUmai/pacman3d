@@ -11,6 +11,7 @@ public class PlayerInput : MonoBehaviour
     private CameraMovement camMovement;
     [SerializeField] private float mouseSensitivity;
     [SerializeField] private BoolVariable canInteract;
+    [SerializeField] private GameEvent OnPauseGame;
 
     private void Start()
     {
@@ -24,6 +25,7 @@ public class PlayerInput : MonoBehaviour
         {
             MoveInput();
             LookInput();
+            PauseInput();
         }
     }
 
@@ -44,5 +46,11 @@ public class PlayerInput : MonoBehaviour
 
         plMovement.entityRotation += lookInput.x;
         camMovement.xRotation -= lookInput.y;
+    }
+
+    private void PauseInput()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+            OnPauseGame.Raise();
     }
 }

@@ -10,6 +10,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private IntVariable totalScore;
     [SerializeField] private IntVariable pacmanLives;
     [SerializeField] private GameEvent OnGameClear;
+    [SerializeField] private GameEvent OnPauseGame;
+    [SerializeField] private BoolVariable canInteract;
 
     [Header("UI Elements")]
     [SerializeField] private TextMeshProUGUI totalScoreDisplay;
@@ -24,17 +26,21 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Animator gameClearAnimation;
     [SerializeField] private TextMeshProUGUI gameClearScoreDisplay;
 
+    [Header("Pause Menu")]
+    [SerializeField] private GameObject pauseMenu;
+
+    private bool IsPaused => Time.timeScale == 0;
+
     private void Start()
     {
         totalScore.Value = 0;
-        totalScore.AddListener(UpdateScore);
-
         SetupLives();
-        pacmanLives.AddListener(UpdateLives);
-
-        OnGameClear.AddListener(GameClear);
-
         SetCursor(false);
+
+        totalScore.AddListener(UpdateScore);
+        pacmanLives.AddListener(UpdateLives);
+        OnGameClear.AddListener(GameClear);
+        OnPauseGame.AddListener(TooglePause);
     }
 
     private void OnDestroy()
@@ -42,6 +48,7 @@ public class UIManager : MonoBehaviour
         totalScore.RemoveListener(UpdateScore);
         pacmanLives.RemoveListener(UpdateLives);
         OnGameClear.RemoveListener(GameClear);
+        OnPauseGame.RemoveListener(TooglePause);
     }
 
     private void SetupLives()
@@ -106,5 +113,13 @@ public class UIManager : MonoBehaviour
     {
         Cursor.lockState = set ? CursorLockMode.None : CursorLockMode.Locked;
         Cursor.visible = set;
+    }
+
+    private void TooglePause()
+    {
+        Time.timeScale = IsPaused ? 1 : 0;
+        SetCursor(IsPaused);
+        pauseMenu.SetActive(IsPaused);
+        canInteract.Value = !IsPaused;
     }
 }

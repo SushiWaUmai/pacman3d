@@ -20,3 +20,6 @@ MonoBehaviour:
   loadingScreenLifeTime: 0
   fixedLoadingTime: 0
   loadTime: 0
+  setTimeScale: 1
+  targetTimeScale: 1
+  debug: 0
