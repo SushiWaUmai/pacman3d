@@ -16,7 +16,13 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Sprite pacmanLifeIcon;
     [SerializeField] private GameObject InGameUI;
     [SerializeField] private Transform pacmanLifeDisplayHolder;
+
+    [Header("Game Over")]
     [SerializeField] private Animator gameOverAnimation;
+
+    [Header("Game Clear")]
+    [SerializeField] private Animator gameClearAnimation;
+    [SerializeField] private TextMeshProUGUI gameClearScoreDisplay;
 
     private void Start()
     {
@@ -83,14 +89,17 @@ public class UIManager : MonoBehaviour
         gameOverAnimation.SetTrigger("Shutdown");
 
         SetCursor(true);
-
-        totalScore.RemoveListener(UpdateScore);
-        pacmanLives.RemoveListener(UpdateLives);
     }
 
     private void GameClear()
     {
+        InGameUI.SetActive(false);
+        gameClearAnimation.gameObject.SetActive(true);
+        gameClearAnimation.SetTrigger("GameClear");
 
+        gameClearScoreDisplay.text = $"Score: {totalScore.Value}";
+
+        SetCursor(true);
     }
 
     private void SetCursor(bool set)

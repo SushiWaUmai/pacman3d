@@ -27,7 +27,6 @@ public class PlayerPostProcessing : MonoBehaviour
     [SerializeField] private FloatVariable respawnAnimationTime;
     [SerializeField] private IntGameEvent OnPlayerDie;
     [SerializeField] private BoolVariable canInteract;
-    [SerializeField] private GameEvent OnGameClear;
 
     private DigitalGlitch digitalGlitch;
     private AnalogGlitch analogGlitch;
@@ -47,7 +46,6 @@ public class PlayerPostProcessing : MonoBehaviour
         SetGlitchIntensity(0);
 
         OnPlayerDie.AddListener(GlitchOut);
-        OnGameClear.AddListener(CreateShockWave);
 
         OnPowerPelletCollect.AddListener(PowerPelletStart);
         OnPowerPelletEnd.AddListener(PowerPelletEnd);
@@ -56,7 +54,6 @@ public class PlayerPostProcessing : MonoBehaviour
     private void OnDestroy()
     {
         OnPlayerDie.RemoveListener(GlitchOut);
-        OnGameClear.RemoveListener(CreateShockWave);
 
         OnPowerPelletCollect.RemoveListener(PowerPelletStart);
         OnPowerPelletEnd.RemoveListener(PowerPelletEnd);
