@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using ScriptableObjectArchitecture;
 
-public class InGameUIManager : MonoBehaviour
+public class UIManager : MonoBehaviour
 {
     [SerializeField] private IntVariable totalScore;
     [SerializeField] private IntVariable pacmanLives;
@@ -13,6 +13,7 @@ public class InGameUIManager : MonoBehaviour
     [Header("UI Elements")]
     [SerializeField] private TextMeshProUGUI totalScoreDisplay;
     [SerializeField] private Sprite pacmanLifeIcon;
+    [SerializeField] private GameObject InGameUI;
     [SerializeField] private Transform pacmanLifeDisplayHolder;
     [SerializeField] private Animator gameOverAnimation;
 
@@ -68,6 +69,7 @@ public class InGameUIManager : MonoBehaviour
     private void GameOver()
     {
         //Debug.Log("Game Over");
+        InGameUI.SetActive(false);
         gameOverAnimation.gameObject.SetActive(true);
         gameOverAnimation.SetTrigger("Shutdown");
 

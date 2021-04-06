@@ -1,10 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using ScriptableObjectArchitecture;
 
 public class PlayerMovement : Movement
 {
     private static PlayerMovement instance;
+
+    [SerializeField] private float powerPelletSpeed;
+    [SerializeField] private GameEvent OnPowerPelletCollect;
+    [SerializeField] private GameEvent OnPowerPelletEnd;
+    private float origSpeed;
+
     public static Vector2Int Direction
     {
         get
@@ -39,10 +46,32 @@ public class PlayerMovement : Movement
     protected override void Init()
     {
         base.Init();
+        origSpeed = speed;
+
+        OnPowerPelletCollect.AddListener(PowerPelletStart);
+        OnPowerPelletEnd.AddListener(PowerPelletEnd);
+    }
+
+    protected override void Destruct()
+    {
+        base.Destruct();
+
+        OnPowerPelletCollect.RemoveListener(PowerPelletStart);
+        OnPowerPelletEnd.RemoveListener(PowerPelletEnd);
     }
 
     private void FixedUpdate()
     {
         MovementUpdate();
+    }
+
+    private void PowerPelletEnd()
+    {
+        speed = origSpeed;
+    }
+
+    private void PowerPelletStart()
+    {
+        speed = powerPelletSpeed;
     }
 }

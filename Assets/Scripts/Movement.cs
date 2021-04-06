@@ -9,7 +9,7 @@ public class Movement : PortalTraveller
 {
     [HideInInspector, ShowNonSerializedField] public Vector3 dir;
     [HideInInspector, ShowNonSerializedField] public float entityRotation;
-    [SerializeField] private float speed;
+    [SerializeField] protected float speed;
     private Rigidbody rb;
 
     [SerializeField] private IntGameEvent OnPlayerDie;

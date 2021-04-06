@@ -204,7 +204,7 @@ MonoBehaviour:
   graphicsObject: {fileID: 2579396220879344349}
   dir: {x: 0, y: 0, z: 0}
   entityRotation: 0
-  speed: 5
+  speed: 7.5
   OnPlayerDie: {fileID: 11400000, guid: 0aded1acfba13804e849deb7906ed0e2, type: 2}
   isRespawning: {fileID: 11400000, guid: dfc6c846d100bc74085cc39cb0fa9c5c, type: 2}
   current: 0
