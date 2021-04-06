@@ -36,6 +36,9 @@ public class GhostGraphics : MonoBehaviour
 
     private void OnDestroy()
     {
+        OnPowerPelletCollect.RemoveListener(PowerPelletStart);
+        OnPowerPelletEnd.RemoveListener(PowerPelletEnd);
+
         ghostMvment.OnGhostEaten -= GhostEaten;
         ghostMvment.OnGhostRecover -= GhostRecover;
     }

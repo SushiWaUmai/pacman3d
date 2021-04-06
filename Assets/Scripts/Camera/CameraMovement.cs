@@ -7,12 +7,7 @@ public class CameraMovement : MonoBehaviour
 {
     [HideInInspector, ShowNonSerializedField] public float xRotation;
     [SerializeField] private float rotationClamp;
-    [ShowNonSerializedField] private Transform camTransform;
-
-    private void Start()
-    {
-        camTransform = GetComponentInChildren<Camera>().transform;
-    }
+    [SerializeField] private Transform camTransform;
 
     private void Update()
     {
