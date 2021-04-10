@@ -27,6 +27,8 @@ public class PlayerInput : MonoBehaviour
             LookInput();
             PauseInput();
         }
+        else if (Time.timeScale == 0)
+            PauseInput();
     }
 
     private void MoveInput()
