@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using ScriptableObjectArchitecture;
@@ -68,6 +66,7 @@ public class UIManager : MonoBehaviour
 
             RectTransform rt = go.GetComponent<RectTransform>();
             rt.sizeDelta = rtSizeDelta;
+            rt.localScale = Vector3.one;
         }
     }
 
