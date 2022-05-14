@@ -10,6 +10,3 @@
 [submodule "Assets/Third_Party_Assets/Blur-Distance-Blur-for-Unity-Postprocessing-Stack-v2"]
 	path = Assets/Third_Party_Assets/Blur-Distance-Blur-for-Unity-Postprocessing-Stack-v2
 	url = https://github.com/Oxeren/Blur-Distance-Blur-for-Unity-Postprocessing-Stack-v2.git
-[submodule "Assets/Third_Party_Assets/Portals"]
-	path = Assets/Third_Party_Assets/Portals
-	url = https://github.com/SebLague/Portals.git
