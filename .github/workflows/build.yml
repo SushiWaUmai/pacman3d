@@ -22,7 +22,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
         with:
-          lfs: true
+          submodules: recursive
 
       - name: Cache
         uses: actions/cache@v2
