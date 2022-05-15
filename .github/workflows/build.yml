@@ -16,7 +16,6 @@ jobs:
           - StandaloneWindows64
           - StandaloneOSX
           - StandaloneLinux64
-          - WebGL
 
     steps:
       - name: Checkout Repository
