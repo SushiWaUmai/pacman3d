@@ -59,3 +59,7 @@ sysinfo.txt
 crashlytics-build.properties
 
 /.vscode/
+
+# Ignore temporaries from GameCI
+/[Aa]rtifacts/
+/[Cc]odeCoverage/
