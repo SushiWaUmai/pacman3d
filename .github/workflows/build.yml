@@ -120,4 +120,4 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v2
         with:
-          artifact_name:  build-WebGL
+          artifact_name:  Build-WebGL
