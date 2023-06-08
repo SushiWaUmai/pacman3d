@@ -1,9 +1,12 @@
-name: Build Unity Project
+name: Build and Publish Unity Project
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - main
 
 jobs:
-  buildAndTestForLinuxBasedPlatforms:
+  build:
     name: Build for ${{ matrix.targetPlatform }}
     runs-on: ubuntu-latest
     strategy:
@@ -45,3 +48,50 @@ jobs:
         with:
           name: Build
           path: build
+
+  publish:
+    needs: [ build ]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download StandaloneWindows64 Artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: Build-StandaloneWindows64
+          path: build/windows
+
+      - name: Download StandaloneOSX Artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: Build-StandaloneOSX
+          path: build/osx
+
+      - name: Download StandaloneLinux64 Artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: Build-StandaloneLinux64
+          path: build/linux
+
+      - uses: manleydev/butler-publish-itchio-action@master
+        env:
+          BUTLER_CREDENTIALS: ${{ secrets.BUTLER_CREDENTIALS }}
+          CHANNEL: windows
+          ITCH_GAME: pacman3d
+          ITCH_USER: sushiwaumai
+          PACKAGE: build/windows
+
+      - uses: manleydev/butler-publish-itchio-action@master
+        env:
+          BUTLER_CREDENTIALS: ${{ secrets.BUTLER_CREDENTIALS }}
+          CHANNEL: osx
+          ITCH_GAME: pacman3d
+          ITCH_USER: sushiwaumai
+          PACKAGE: build/osx
+
+      - uses: manleydev/butler-publish-itchio-action@master
+        env:
+          BUTLER_CREDENTIALS: ${{ secrets.BUTLER_CREDENTIALS }}
+          CHANNEL: linux
+          ITCH_GAME: pacman3d
+          ITCH_USER: sushiwaumai
+          PACKAGE: build/linux
